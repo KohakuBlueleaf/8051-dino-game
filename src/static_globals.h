@@ -12,6 +12,7 @@ __data __at(0x76) char keyChar; // for game control to move the dinosaur
 __data __at(0x77) char lastKeyState;
 __data __at(0x78) unsigned char lcd_ready; 
 __data __at(0x79) char rendered;
+__data __at(0x7A) unsigned char random_number;
 
 
 // Define global variables and game state

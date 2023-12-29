@@ -7,6 +7,7 @@
 #define MAP_WIDTH 16  // or however wide your map is
 #define BUFFER_SIZE 2 // or however many keys you want to statefer
 #define INITIAL_DELAY '6'
+#define MAX_SCORE 222
 
 #define UP_KEY '2'
 #define DOWN_KEY '8'

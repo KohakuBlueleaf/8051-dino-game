@@ -4,6 +4,7 @@
 #include "keylib.h"
 #include "preemptive.h"
 #include "dino.h"
+#include "utils.h"
 
 
 char check_cactus(char map[MAP_HEIGHT][MAP_WIDTH / 8], int x, int y) {
@@ -17,6 +18,7 @@ char check_cactus(char map[MAP_HEIGHT][MAP_WIDTH / 8], int x, int y) {
 const char dinosaur[] = {0x07, 0x05, 0x06, 0x07, 0x14, 0x17, 0x0E, 0x0A};// 0x10~0x17
 const char cactus[] = {0x04, 0x05, 0x15, 0x15, 0x16, 0x0C, 0x04, 0x04}; // 0x20~0x27
 const char number[] = "0123456789";
+const unsigned char density[] = {0, 1, 2, 3, 1, 2, 3, 1, 2, 3};
 
 
 void LCD_set_symbol(char code, const char symb[]) {
@@ -116,7 +118,7 @@ void ctrl_thread() {
                     sub_state=1;
                 }
             } else if (gameState==GAMEOVER){
-                if (lastKeyState == SIGN_KEY ) {
+                if (lastKeyState == SIGN_KEY) {
                     gameState = READY;
                     rendered = 0 ;
                 }
@@ -140,7 +142,7 @@ void ctrl_thread() {
 */
 unsigned char devide(unsigned char a, unsigned char b) {
     unsigned char result=0;
-    while(a>b){
+    while(a>=b){
         a-=b;
         result++;
     }
@@ -163,6 +165,7 @@ void render_thread() {
             state=1;
             if(!rendered){
                 if(gameState == READY){
+                    delayms(DELAY_AMOUNT);
                     for ( row = 0; row < MAP_HEIGHT; row++) {
                         for ( col = 0; col < MAP_WIDTH; col++) {
                             LCD_cursorGoTo(row, col);
@@ -171,28 +174,32 @@ void render_thread() {
                             }else if (row==1 && col<13) {
                                 LCD_write_char(("To Start Game")[col]); 
                             }else{
-                                LCD_write_char('_');
+                                LCD_write_char(' ');
                             }
                         }
                     }
                 }else if(gameState == GAMEOVER){
+                    delayms(DELAY_AMOUNT);
                     for ( row = 0; row < MAP_HEIGHT; row++) {
                         for ( col = 0; col < MAP_WIDTH; col++) {
                             LCD_cursorGoTo(row, col);
-                            if(row==0 && col<9) {
-                                LCD_write_char(("Game_Over")[col]); 
+                            if(row==0 && col<11) {
+                                if(score < MAX_SCORE)
+                                    LCD_write_char(("Game Over! ")[col]);
+                                else
+                                    LCD_write_char(("Game Clear!")[col]);
                             }else if (row==1 && col<11) {
                                 if(col<7){
-                                    LCD_write_char(("Score:_")[col]); 
+                                    LCD_write_char(("Score: ")[col]); 
                                 }else if(col==8){
                                     LCD_write_char(("0123456789")[devide(score, 100)]); 
-                                } if(col==9){
+                                }else if(col==9){
                                     LCD_write_char(("0123456789")[devide((score%100), 10)]); 
-                                } if(col==10){
+                                }else if(col==10){
                                     LCD_write_char(("0123456789")[(score%10)]); 
                                 }
                             }else{
-                                LCD_write_char('_');
+                                LCD_write_char(' ');
                             }
                         }
                     }
@@ -206,11 +213,12 @@ void render_thread() {
                                 // LCD_cursorGoTo(row, col);
                                 LCD_write_char(CACTUS); // Assuming '\1' is mapped to cactus graphics
                             }else{
-                                LCD_write_char('_');
+                                LCD_write_char(' ');
                             }
                         }
                     }
                 }
+                LCD_returnHome();
                 rendered = 1;
             }
         }
@@ -231,26 +239,28 @@ void fixed_update() {
             __critical {
                 state=3;
                 sub_state=0;
+                unsigned char new=0;
                 unsigned char add1=0;
                 unsigned char add2=0;
                 if (!check_cactus(map, dinosaurPosition, 0)) {
+                    new = random()%(5-density[difficulty])==0;
                     add1 = check_cactus(map, 0, 8);
-                    add2 = check_cactus(map, 0, 0);
+                    add2 = new && random()%2 && !check_cactus(map, 1, 15) && !check_cactus(map, 0, 14);
                     map[0][0] = map[0][0] << 1;
                     map[0][0] += add1;
                     map[0][1] = map[0][1] << 1;
                     map[0][1] += add2;
                     
                     add1 = check_cactus(map, 1, 8);
-                    add2 = check_cactus(map, 1, 0);
+                    add2 = (add2 ^ new) && !check_cactus(map, 0, 14) && !check_cactus(map, 1, 14);;
                     map[1][0] = map[1][0] << 1;
                     map[1][0] += add1;
                     map[1][1] = map[1][1] << 1;
                     map[1][1] += add2;
                 }
-                if (check_cactus(map, dinosaurPosition, 0)) {
+                if (check_cactus(map, dinosaurPosition, 0) || score >= MAX_SCORE) {
                     gameState = GAMEOVER;
-                }else{
+                }else if(check_cactus(map, !dinosaurPosition, 0)){
                     score++;
                 }
                 sub_state=2;
@@ -276,6 +286,7 @@ void main() {
     lastKeyState=0;
     state=0;
     sub_state=0;
+    random_number=xorshift(1); //take 1 as seed
 
     LCD_set_symbol(0x08, dinosaur); // bitmap for dinosaur starts at 0x10
     LCD_set_symbol(0x10, cactus);   // bitmap for cactus starts at 0x20
