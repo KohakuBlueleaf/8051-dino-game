@@ -2,9 +2,4 @@
 
 ## Compile
 
-```bash
-make dir
-make all
-```
-
-The program will be in `./build/dino.hex`
+Use `make` to build all the file. The program will be in `./build/dino.hex`

@@ -3,7 +3,7 @@ SOURCE_DIR = ./src
 BUILD_DIR = ./build
 
 CC = sdcc
-CFLAGS = --opt-code-speed -c --std-sdcc99 --model-small
+CFLAGS  = -c --std-sdcc99 --model-small
 LDFLAGS =
 
 # Define the object files needed for the final executable
