@@ -409,7 +409,7 @@ __sdcc_program_startup:
 ;y                         Allocated with name '_check_cactus_PARM_3'
 ;map                       Allocated to registers r5 r6 r7 
 ;------------------------------------------------------------
-;	dino.c:9: char check_cactus(char map[MAP_HEIGHT][MAP_WIDTH / 8], int x, int y) {
+;	src/dino.c:9: char check_cactus(char map[MAP_HEIGHT][MAP_WIDTH / 8], int x, int y) {
 ;	-----------------------------------------
 ;	 function check_cactus
 ;	-----------------------------------------
@@ -425,7 +425,7 @@ _check_cactus:
 	mov	r5, dpl
 	mov	r6, dph
 	mov	r7, b
-;	dino.c:11: res = map[x][y>>3] & (1 << (7 - y % 8));
+;	src/dino.c:11: res = map[x][y>>3] & (1 << (7 - y % 8));
 	mov	a,_check_cactus_PARM_2
 	add	a,_check_cactus_PARM_2
 	mov	r3,a
@@ -494,7 +494,7 @@ _check_cactus:
 	mov	a,r4
 	anl	a,r5
 	mov	_res,a
-;	dino.c:12: return res > 0;
+;	src/dino.c:12: return res > 0;
 	mov	a,_res
 	jz	00103$
 	mov	r7,#0x01
@@ -503,7 +503,7 @@ _check_cactus:
 	mov	r7,#0x00
 00104$:
 	mov	dpl,r7
-;	dino.c:13: }
+;	src/dino.c:13: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_set_symbol'
@@ -511,18 +511,18 @@ _check_cactus:
 ;symb                      Allocated with name '_LCD_set_symbol_PARM_2'
 ;code                      Allocated to registers r7 
 ;------------------------------------------------------------
-;	dino.c:22: void LCD_set_symbol(char code, const char symb[]) {
+;	src/dino.c:22: void LCD_set_symbol(char code, const char symb[]) {
 ;	-----------------------------------------
 ;	 function LCD_set_symbol
 ;	-----------------------------------------
 _LCD_set_symbol:
 	mov	r7, dpl
-;	dino.c:26: LCD_setCgRamAddress(code); // code is the character generation memory 
+;	src/dino.c:26: LCD_setCgRamAddress(code); // code is the character generation memory 
 	mov	a,#0x40
 	add	a, r7
 	mov	dpl,a
 	lcall	_LCD_IRWrite
-;	dino.c:29: LCD_write_char(symb[0]);
+;	src/dino.c:29: LCD_write_char(symb[0]);
 	mov	r5,_LCD_set_symbol_PARM_2
 	mov	r6,(_LCD_set_symbol_PARM_2 + 1)
 	mov	r7,(_LCD_set_symbol_PARM_2 + 2)
@@ -538,7 +538,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:30: LCD_write_char(symb[1]);
+;	src/dino.c:30: LCD_write_char(symb[1]);
 	mov	a,#0x01
 	add	a, r5
 	mov	r2,a
@@ -558,7 +558,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:31: LCD_write_char(symb[2]);
+;	src/dino.c:31: LCD_write_char(symb[2]);
 	mov	a,#0x02
 	add	a, r5
 	mov	r2,a
@@ -578,7 +578,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:32: LCD_write_char(symb[3]);
+;	src/dino.c:32: LCD_write_char(symb[3]);
 	mov	a,#0x03
 	add	a, r5
 	mov	r2,a
@@ -598,7 +598,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:33: LCD_write_char(symb[4]);
+;	src/dino.c:33: LCD_write_char(symb[4]);
 	mov	a,#0x04
 	add	a, r5
 	mov	r2,a
@@ -618,7 +618,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:34: LCD_write_char(symb[5]);
+;	src/dino.c:34: LCD_write_char(symb[5]);
 	mov	a,#0x05
 	add	a, r5
 	mov	r2,a
@@ -638,7 +638,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:35: LCD_write_char(symb[6]);
+;	src/dino.c:35: LCD_write_char(symb[6]);
 	mov	a,#0x06
 	add	a, r5
 	mov	r2,a
@@ -658,7 +658,7 @@ _LCD_set_symbol:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	dino.c:36: LCD_write_char(symb[7]);
+;	src/dino.c:36: LCD_write_char(symb[7]);
 	mov	a,#0x07
 	add	a, r5
 	mov	r5,a
@@ -670,7 +670,7 @@ _LCD_set_symbol:
 	mov	b,r7
 	lcall	__gptrget
 	mov	dpl,a
-;	dino.c:39: }
+;	src/dino.c:39: }
 	ljmp	_LCD_write_char
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'delayms'
@@ -678,95 +678,95 @@ _LCD_set_symbol:
 ;time                      Allocated to registers 
 ;n                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	dino.c:43: void delayms(unsigned int time)
+;	src/dino.c:43: void delayms(unsigned int time)
 ;	-----------------------------------------
 ;	 function delayms
 ;	-----------------------------------------
 _delayms:
 	mov	r6, dpl
 	mov	r7, dph
-;	dino.c:46: while(time>0)
+;	src/dino.c:46: while(time>0)
 00104$:
 	mov	a,r6
 	orl	a,r7
 	jz	00107$
-;	dino.c:49: while(n > 0)
+;	src/dino.c:49: while(n > 0)
 	mov	r4,#0x78
 	mov	r5,#0x00
 00101$:
 	mov	a,r4
 	orl	a,r5
 	jz	00103$
-;	dino.c:50: n--;
+;	src/dino.c:50: n--;
 	dec	r4
 	cjne	r4,#0xff,00137$
 	dec	r5
 00137$:
 	sjmp	00101$
 00103$:
-;	dino.c:51: time--;
+;	src/dino.c:51: time--;
 	dec	r6
 	cjne	r6,#0xff,00138$
 	dec	r7
 00138$:
 	sjmp	00104$
 00107$:
-;	dino.c:53: }
+;	src/dino.c:53: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'game_init'
 ;------------------------------------------------------------
-;	dino.c:56: void game_init(){
+;	src/dino.c:56: void game_init(){
 ;	-----------------------------------------
 ;	 function game_init
 ;	-----------------------------------------
 _game_init:
-;	dino.c:66: }
+;	src/dino.c:66: }
 	setb	_game_init_sloc0_1_0
 	jbc	ea,00103$
 	clr	_game_init_sloc0_1_0
 00103$:
-;	dino.c:58: score = 0;
+;	src/dino.c:58: score = 0;
 	mov	_score,#0x00
-;	dino.c:59: rendered = 0;
+;	src/dino.c:59: rendered = 0;
 	mov	_rendered,#0x00
-;	dino.c:60: dinosaurPosition = 0;
+;	src/dino.c:60: dinosaurPosition = 0;
 	mov	_dinosaurPosition,#0x00
-;	dino.c:61: nextCactusRow = 0;
+;	src/dino.c:61: nextCactusRow = 0;
 	mov	_nextCactusRow,#0x00
-;	dino.c:62: map[0][0] = 0x06; // 0000_0111
+;	src/dino.c:62: map[0][0] = 0x06; // 0000_0111
 	mov	_map,#0x06
-;	dino.c:63: map[0][1] = 0x04; // 0000_0100 
+;	src/dino.c:63: map[0][1] = 0x04; // 0000_0100 
 	mov	(_map + 0x0001),#0x04
-;	dino.c:64: map[1][0] = 0x00; // 0000_0000 
+;	src/dino.c:64: map[1][0] = 0x00; // 0000_0000 
 	mov	(_map + 0x0002),#0x00
-;	dino.c:65: map[1][1] = 0x20; // 0010_0000
+;	src/dino.c:65: map[1][1] = 0x20; // 0010_0000
 	mov	(_map + 0x0003),#0x20
 	mov	c,_game_init_sloc0_1_0
 	mov	ea,c
-;	dino.c:67: }
+;	src/dino.c:67: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ctrl_thread'
 ;------------------------------------------------------------
-;	dino.c:74: void ctrl_thread() {
+;	src/dino.c:74: void ctrl_thread() {
 ;	-----------------------------------------
 ;	 function ctrl_thread
 ;	-----------------------------------------
 _ctrl_thread:
-;	dino.c:75: while(1) {
+;	src/dino.c:75: while(1) {
 00134$:
-;	dino.c:84: }
+;	src/dino.c:84: }
 	setb	_ctrl_thread_sloc0_1_0
 	jbc	ea,00240$
 	clr	_ctrl_thread_sloc0_1_0
 00240$:
-;	dino.c:77: state = 0;
+;	src/dino.c:77: state = 0;
 	mov	_state,#0x00
-;	dino.c:78: keyChar = KeyToChar();  // Get the current key character
+;	src/dino.c:78: keyChar = KeyToChar();  // Get the current key character
 	lcall	_KeyToChar
 	mov	_keyChar,dpl
-;	dino.c:79: if ((keyChar >= '0' && keyChar <= '9') 
+;	src/dino.c:79: if ((keyChar >= '0' && keyChar <= '9') 
 	mov	a,#0x100 - 0x30
 	add	a,_keyChar
 	jnc	00107$
@@ -774,7 +774,7 @@ _ctrl_thread:
 	add	a,#0xff - 0x39
 	jnc	00101$
 00107$:
-;	dino.c:80: || (keyChar == UP_KEY || keyChar == DOWN_KEY || keyChar== SIGN_KEY ) 
+;	src/dino.c:80: || (keyChar == UP_KEY || keyChar == DOWN_KEY || keyChar== SIGN_KEY ) 
 	mov	a,#0x32
 	cjne	a,_keyChar,00243$
 	sjmp	00106$
@@ -786,16 +786,16 @@ _ctrl_thread:
 	mov	a,#0x23
 	cjne	a,_keyChar,00102$
 00106$:
-;	dino.c:81: && (lastKeyState == '\0')){
+;	src/dino.c:81: && (lastKeyState == '\0')){
 	mov	a,_lastKeyState
 	jnz	00102$
 00101$:
-;	dino.c:82: lastKeyState = keyChar; 
+;	src/dino.c:82: lastKeyState = keyChar; 
 	mov	_lastKeyState,_keyChar
 00102$:
 	mov	c,_ctrl_thread_sloc0_1_0
 	mov	ea,c
-;	dino.c:86: if((keyChar || lastKeyState) || (keyChar != lastKeyState)) {
+;	src/dino.c:86: if((keyChar || lastKeyState) || (keyChar != lastKeyState)) {
 	mov	a,_keyChar
 	jnz	00129$
 	mov	a,_lastKeyState
@@ -805,19 +805,19 @@ _ctrl_thread:
 	ljmp	00130$
 00250$:
 00129$:
-;	dino.c:87: if(gameState==READY) {
+;	src/dino.c:87: if(gameState==READY) {
 	mov	a,#0x33
 	cjne	a,_gameState,00127$
-;	dino.c:101: }
+;	src/dino.c:101: }
 	setb	_ctrl_thread_sloc0_1_0
 	jbc	ea,00253$
 	clr	_ctrl_thread_sloc0_1_0
 00253$:
-;	dino.c:91: state=2;
+;	src/dino.c:91: state=2;
 	mov	_state,#0x02
-;	dino.c:92: sub_state=0;
+;	src/dino.c:92: sub_state=0;
 	mov	_sub_state,#0x00
-;	dino.c:93: if ((lastKeyState >= '0' && lastKeyState <= '9') && (keyChar==SIGN_KEY)) {
+;	src/dino.c:93: if ((lastKeyState >= '0' && lastKeyState <= '9') && (keyChar==SIGN_KEY)) {
 	mov	a,#0x100 - 0x30
 	add	a,_lastKeyState
 	jnc	00109$
@@ -826,99 +826,99 @@ _ctrl_thread:
 	jc	00109$
 	mov	a,#0x23
 	cjne	a,_keyChar,00109$
-;	dino.c:94: difficulty = lastKeyState - '0';
+;	src/dino.c:94: difficulty = lastKeyState - '0';
 	mov	a,_lastKeyState
 	add	a,#0xd0
 	mov	_difficulty,a
-;	dino.c:95: lastKeyState = '\0';
+;	src/dino.c:95: lastKeyState = '\0';
 	mov	_lastKeyState,#0x00
-;	dino.c:96: rendered = 0;
+;	src/dino.c:96: rendered = 0;
 	mov	_rendered,#0x00
-;	dino.c:97: game_init();
+;	src/dino.c:97: game_init();
 	lcall	_game_init
-;	dino.c:98: gameState = START;
+;	src/dino.c:98: gameState = START;
 	mov	_gameState,#0x34
 00109$:
-;	dino.c:100: sub_state=1;
+;	src/dino.c:100: sub_state=1;
 	mov	_sub_state,#0x01
 	mov	c,_ctrl_thread_sloc0_1_0
 	mov	ea,c
 	sjmp	00130$
 00127$:
-;	dino.c:102: } else if (gameState==START) {
+;	src/dino.c:102: } else if (gameState==START) {
 	mov	a,#0x34
 	cjne	a,_gameState,00124$
-;	dino.c:117: }
+;	src/dino.c:117: }
 	setb	_ctrl_thread_sloc0_1_0
 	jbc	ea,00260$
 	clr	_ctrl_thread_sloc0_1_0
 00260$:
-;	dino.c:106: state=3;
+;	src/dino.c:106: state=3;
 	mov	_state,#0x03
-;	dino.c:107: sub_state=0;
+;	src/dino.c:107: sub_state=0;
 	mov	_sub_state,#0x00
-;	dino.c:108: if (lastKeyState == UP_KEY && dinosaurPosition>0 ) {
+;	src/dino.c:108: if (lastKeyState == UP_KEY && dinosaurPosition>0 ) {
 	mov	a,#0x32
 	cjne	a,_lastKeyState,00116$
 	mov	a,_dinosaurPosition
 	jz	00116$
-;	dino.c:109: dinosaurPosition--;
+;	src/dino.c:109: dinosaurPosition--;
 	mov	a,_dinosaurPosition
 	dec	a
 	mov	_dinosaurPosition,a
-;	dino.c:110: rendered=0;
+;	src/dino.c:110: rendered=0;
 	mov	_rendered,#0x00
 	sjmp	00117$
 00116$:
-;	dino.c:111: } else if (lastKeyState == DOWN_KEY && dinosaurPosition<1) {
+;	src/dino.c:111: } else if (lastKeyState == DOWN_KEY && dinosaurPosition<1) {
 	mov	a,#0x38
 	cjne	a,_lastKeyState,00117$
 	mov	a,#0x100 - 0x01
 	add	a,_dinosaurPosition
 	jc	00117$
-;	dino.c:112: dinosaurPosition++;
+;	src/dino.c:112: dinosaurPosition++;
 	mov	a,_dinosaurPosition
 	inc	a
 	mov	_dinosaurPosition,a
-;	dino.c:113: rendered=0;
+;	src/dino.c:113: rendered=0;
 	mov	_rendered,#0x00
 00117$:
-;	dino.c:115: lastKeyState = '\0';
+;	src/dino.c:115: lastKeyState = '\0';
 	mov	_lastKeyState,#0x00
-;	dino.c:116: sub_state=1;
+;	src/dino.c:116: sub_state=1;
 	mov	_sub_state,#0x01
 	mov	c,_ctrl_thread_sloc0_1_0
 	mov	ea,c
 	sjmp	00130$
 00124$:
-;	dino.c:118: } else if (gameState==GAMEOVER){
+;	src/dino.c:118: } else if (gameState==GAMEOVER){
 	mov	a,#0x35
 	cjne	a,_gameState,00130$
-;	dino.c:119: if (lastKeyState == SIGN_KEY ) {
+;	src/dino.c:119: if (lastKeyState == SIGN_KEY ) {
 	mov	a,#0x23
 	cjne	a,_lastKeyState,00120$
-;	dino.c:120: gameState = READY;
+;	src/dino.c:120: gameState = READY;
 	mov	_gameState,#0x33
-;	dino.c:121: rendered = 0 ;
+;	src/dino.c:121: rendered = 0 ;
 	mov	_rendered,#0x00
 00120$:
-;	dino.c:123: lastKeyState = '\0';
+;	src/dino.c:123: lastKeyState = '\0';
 	mov	_lastKeyState,#0x00
-;	dino.c:124: sub_state=1;
+;	src/dino.c:124: sub_state=1;
 	mov	_sub_state,#0x01
 00130$:
-;	dino.c:129: }
+;	src/dino.c:129: }
 	setb	_ctrl_thread_sloc0_1_0
 	jbc	ea,00271$
 	clr	_ctrl_thread_sloc0_1_0
 00271$:
-;	dino.c:128: sub_state=7;
+;	src/dino.c:128: sub_state=7;
 	mov	_sub_state,#0x07
 	mov	c,_ctrl_thread_sloc0_1_0
 	mov	ea,c
-;	dino.c:130: ThreadYield();
+;	src/dino.c:130: ThreadYield();
 	lcall	_ThreadYield
-;	dino.c:132: }
+;	src/dino.c:132: }
 	ljmp	00134$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'devide'
@@ -927,58 +927,58 @@ _ctrl_thread:
 ;a                         Allocated to registers r7 
 ;result                    Allocated to registers r6 
 ;------------------------------------------------------------
-;	dino.c:141: unsigned char devide(unsigned char a, unsigned char b) {
+;	src/dino.c:141: unsigned char devide(unsigned char a, unsigned char b) {
 ;	-----------------------------------------
 ;	 function devide
 ;	-----------------------------------------
 _devide:
 	mov	r7, dpl
-;	dino.c:143: while(a>b){
+;	src/dino.c:143: while(a>b){
 	mov	r6,#0x00
 00101$:
 	clr	c
 	mov	a,_devide_PARM_2
 	subb	a,r7
 	jnc	00103$
-;	dino.c:144: a-=b;
+;	src/dino.c:144: a-=b;
 	mov	a,r7
 	clr	c
 	subb	a,_devide_PARM_2
 	mov	r7,a
-;	dino.c:145: result++;
+;	src/dino.c:145: result++;
 	inc	r6
 	sjmp	00101$
 00103$:
-;	dino.c:147: return result;
+;	src/dino.c:147: return result;
 	mov	dpl, r6
-;	dino.c:148: }
+;	src/dino.c:148: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'render_thread'
 ;------------------------------------------------------------
-;	dino.c:156: void render_thread() {
+;	src/dino.c:156: void render_thread() {
 ;	-----------------------------------------
 ;	 function render_thread
 ;	-----------------------------------------
 _render_thread:
-;	dino.c:161: while(1) {
+;	src/dino.c:161: while(1) {
 00151$:
-;	dino.c:216: }
+;	src/dino.c:216: }
 	setb	_render_thread_sloc0_1_0
 	jbc	ea,00365$
 	clr	_render_thread_sloc0_1_0
 00365$:
-;	dino.c:163: state=1;
+;	src/dino.c:163: state=1;
 	mov	_state,#0x01
-;	dino.c:164: if(!rendered){
+;	src/dino.c:164: if(!rendered){
 	mov	a,_rendered
 	jz	00366$
 	ljmp	00148$
 00366$:
-;	dino.c:165: if(gameState == READY){
+;	src/dino.c:165: if(gameState == READY){
 	mov	a,#0x33
 	cjne	a,_gameState,00145$
-;	dino.c:166: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:166: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	_row,#0x00
 00157$:
 	mov	a,#0x100 - 0x02
@@ -986,13 +986,13 @@ _render_thread:
 	jnc	00369$
 	ljmp	00146$
 00369$:
-;	dino.c:167: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:167: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	_col,#0x00
 00154$:
 	mov	a,#0x100 - 0x10
 	add	a,_col
 	jc	00158$
-;	dino.c:168: LCD_cursorGoTo(row, col);
+;	src/dino.c:168: LCD_cursorGoTo(row, col);
 	mov	a,_row
 	rr	a
 	rr	a
@@ -1001,13 +1001,13 @@ _render_thread:
 	orl	a,#0x80
 	mov	dpl,a
 	lcall	_LCD_IRWrite
-;	dino.c:169: if(row==0 && col<12) {
+;	src/dino.c:169: if(row==0 && col<12) {
 	mov	a,_row
 	jnz	00106$
 	mov	a,#0x100 - 0x0c
 	add	a,_col
 	jc	00106$
-;	dino.c:170: LCD_write_char(("Choose Level")[col]); 
+;	src/dino.c:170: LCD_write_char(("Choose Level")[col]); 
 	mov	a,_col
 	mov	dptr,#___str_0
 	movc	a,@a+dptr
@@ -1015,13 +1015,13 @@ _render_thread:
 	lcall	_LCD_write_char
 	sjmp	00155$
 00106$:
-;	dino.c:171: }else if (row==1 && col<13) {
+;	src/dino.c:171: }else if (row==1 && col<13) {
 	mov	a,#0x01
 	cjne	a,_row,00102$
 	mov	a,#0x100 - 0x0d
 	add	a,_col
 	jc	00102$
-;	dino.c:172: LCD_write_char(("To Start Game")[col]); 
+;	src/dino.c:172: LCD_write_char(("To Start Game")[col]); 
 	mov	a,_col
 	mov	dptr,#___str_1
 	movc	a,@a+dptr
@@ -1029,30 +1029,30 @@ _render_thread:
 	lcall	_LCD_write_char
 	sjmp	00155$
 00102$:
-;	dino.c:174: LCD_write_char('_');
+;	src/dino.c:174: LCD_write_char('_');
 	mov	dpl, #0x5f
 	lcall	_LCD_write_char
 00155$:
-;	dino.c:167: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:167: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	a,_col
 	inc	a
 	mov	_col,a
 	sjmp	00154$
 00158$:
-;	dino.c:166: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:166: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	a,_row
 	inc	a
 	mov	_row,a
 	sjmp	00157$
 00145$:
-;	dino.c:178: }else if(gameState == GAMEOVER){
+;	src/dino.c:178: }else if(gameState == GAMEOVER){
 	mov	a,#0x35
 	cjne	a,_gameState,00376$
 	sjmp	00377$
 00376$:
 	ljmp	00142$
 00377$:
-;	dino.c:179: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:179: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	_row,#0x00
 00163$:
 	mov	a,#0x100 - 0x02
@@ -1060,7 +1060,7 @@ _render_thread:
 	jnc	00378$
 	ljmp	00146$
 00378$:
-;	dino.c:180: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:180: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	_col,#0x00
 00160$:
 	mov	a,#0x100 - 0x10
@@ -1068,7 +1068,7 @@ _render_thread:
 	jnc	00379$
 	ljmp	00164$
 00379$:
-;	dino.c:181: LCD_cursorGoTo(row, col);
+;	src/dino.c:181: LCD_cursorGoTo(row, col);
 	mov	a,_row
 	rr	a
 	rr	a
@@ -1077,13 +1077,13 @@ _render_thread:
 	orl	a,#0x80
 	mov	dpl,a
 	lcall	_LCD_IRWrite
-;	dino.c:182: if(row==0 && col<9) {
+;	src/dino.c:182: if(row==0 && col<9) {
 	mov	a,_row
 	jnz	00125$
 	mov	a,#0x100 - 0x09
 	add	a,_col
 	jc	00125$
-;	dino.c:183: LCD_write_char(("Game_Over")[col]); 
+;	src/dino.c:183: LCD_write_char(("Game_Over")[col]); 
 	mov	a,_col
 	mov	dptr,#___str_2
 	movc	a,@a+dptr
@@ -1091,7 +1091,7 @@ _render_thread:
 	lcall	_LCD_write_char
 	ljmp	00161$
 00125$:
-;	dino.c:184: }else if (row==1 && col<11) {
+;	src/dino.c:184: }else if (row==1 && col<11) {
 	mov	a,#0x01
 	cjne	a,_row,00382$
 	sjmp	00383$
@@ -1103,11 +1103,11 @@ _render_thread:
 	jnc	00384$
 	ljmp	00121$
 00384$:
-;	dino.c:185: if(col<7){
+;	src/dino.c:185: if(col<7){
 	mov	a,#0x100 - 0x07
 	add	a,_col
 	jc	00114$
-;	dino.c:186: LCD_write_char(("Score:_")[col]); 
+;	src/dino.c:186: LCD_write_char(("Score:_")[col]); 
 	mov	a,_col
 	mov	dptr,#___str_3
 	movc	a,@a+dptr
@@ -1115,10 +1115,10 @@ _render_thread:
 	lcall	_LCD_write_char
 	sjmp	00115$
 00114$:
-;	dino.c:187: }else if(col==8){
+;	src/dino.c:187: }else if(col==8){
 	mov	a,#0x08
 	cjne	a,_col,00115$
-;	dino.c:188: LCD_write_char(("0123456789")[devide(score, 100)]); 
+;	src/dino.c:188: LCD_write_char(("0123456789")[devide(score, 100)]); 
 	mov	_devide_PARM_2,#0x64
 	mov	dpl, _score
 	lcall	_devide
@@ -1128,10 +1128,10 @@ _render_thread:
 	mov	dpl,a
 	lcall	_LCD_write_char
 00115$:
-;	dino.c:189: } if(col==9){
+;	src/dino.c:189: } if(col==9){
 	mov	a,#0x09
 	cjne	a,_col,00117$
-;	dino.c:190: LCD_write_char(("0123456789")[devide((score%100), 10)]); 
+;	src/dino.c:190: LCD_write_char(("0123456789")[devide((score%100), 10)]); 
 	mov	r6,_score
 	mov	r7,#0x00
 	mov	__modsint_PARM_2,#0x64
@@ -1147,10 +1147,10 @@ _render_thread:
 	mov	dpl,a
 	lcall	_LCD_write_char
 00117$:
-;	dino.c:191: } if(col==10){
+;	src/dino.c:191: } if(col==10){
 	mov	a,#0x0a
 	cjne	a,_col,00161$
-;	dino.c:192: LCD_write_char(("0123456789")[(score%10)]); 
+;	src/dino.c:192: LCD_write_char(("0123456789")[(score%10)]); 
 	mov	r6,_score
 	mov	r7,#0x00
 	mov	__modsint_PARM_2,#0x0a
@@ -1172,38 +1172,38 @@ _render_thread:
 	lcall	_LCD_write_char
 	sjmp	00161$
 00121$:
-;	dino.c:195: LCD_write_char('_');
+;	src/dino.c:195: LCD_write_char('_');
 	mov	dpl, #0x5f
 	lcall	_LCD_write_char
 00161$:
-;	dino.c:180: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:180: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	a,_col
 	inc	a
 	mov	_col,a
 	ljmp	00160$
 00164$:
-;	dino.c:179: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:179: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	a,_row
 	inc	a
 	mov	_row,a
 	ljmp	00163$
 00142$:
-;	dino.c:199: }else if(gameState == START){
+;	src/dino.c:199: }else if(gameState == START){
 	mov	a,#0x34
 	cjne	a,_gameState,00146$
-;	dino.c:200: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:200: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	_row,#0x00
 00169$:
 	mov	a,#0x100 - 0x02
 	add	a,_row
 	jc	00146$
-;	dino.c:201: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:201: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	_col,#0x00
 00166$:
 	mov	a,#0x100 - 0x10
 	add	a,_col
 	jc	00170$
-;	dino.c:202: LCD_cursorGoTo(row, col);
+;	src/dino.c:202: LCD_cursorGoTo(row, col);
 	mov	a,_row
 	rr	a
 	rr	a
@@ -1212,17 +1212,17 @@ _render_thread:
 	orl	a,#0x80
 	mov	dpl,a
 	lcall	_LCD_IRWrite
-;	dino.c:203: if(row==dinosaurPosition && col==0) {
+;	src/dino.c:203: if(row==dinosaurPosition && col==0) {
 	mov	a,_dinosaurPosition
 	cjne	a,_row,00134$
 	mov	a,_col
 	jnz	00134$
-;	dino.c:204: LCD_write_char(DINOSAUR); 
+;	src/dino.c:204: LCD_write_char(DINOSAUR); 
 	mov	dpl, #0x01
 	lcall	_LCD_write_char
 	sjmp	00167$
 00134$:
-;	dino.c:205: }else if (check_cactus(map, row, col)) { // If there's a cactus at this position
+;	src/dino.c:205: }else if (check_cactus(map, row, col)) { // If there's a cactus at this position
 	mov	_check_cactus_PARM_2,_row
 	mov	(_check_cactus_PARM_2 + 1),#0x00
 	mov	_check_cactus_PARM_3,_col
@@ -1232,35 +1232,35 @@ _render_thread:
 	lcall	_check_cactus
 	mov	a, dpl
 	jz	00131$
-;	dino.c:207: LCD_write_char(CACTUS); // Assuming '\1' is mapped to cactus graphics
+;	src/dino.c:207: LCD_write_char(CACTUS); // Assuming '\1' is mapped to cactus graphics
 	mov	dpl, #0x02
 	lcall	_LCD_write_char
 	sjmp	00167$
 00131$:
-;	dino.c:209: LCD_write_char('_');
+;	src/dino.c:209: LCD_write_char('_');
 	mov	dpl, #0x5f
 	lcall	_LCD_write_char
 00167$:
-;	dino.c:201: for ( col = 0; col < MAP_WIDTH; col++) {
+;	src/dino.c:201: for ( col = 0; col < MAP_WIDTH; col++) {
 	mov	a,_col
 	inc	a
 	mov	_col,a
 	sjmp	00166$
 00170$:
-;	dino.c:200: for ( row = 0; row < MAP_HEIGHT; row++) {
+;	src/dino.c:200: for ( row = 0; row < MAP_HEIGHT; row++) {
 	mov	a,_row
 	inc	a
 	mov	_row,a
 	sjmp	00169$
 00146$:
-;	dino.c:214: rendered = 1;
+;	src/dino.c:214: rendered = 1;
 	mov	_rendered,#0x01
 00148$:
 	mov	c,_render_thread_sloc0_1_0
 	mov	ea,c
-;	dino.c:218: ThreadYield();
+;	src/dino.c:218: ThreadYield();
 	lcall	_ThreadYield
-;	dino.c:220: }
+;	src/dino.c:220: }
 	ljmp	00151$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'fixed_update'
@@ -1268,30 +1268,30 @@ _render_thread:
 ;add1                      Allocated to registers r7 
 ;add2                      Allocated to registers r6 
 ;------------------------------------------------------------
-;	dino.c:228: void fixed_update() {
+;	src/dino.c:228: void fixed_update() {
 ;	-----------------------------------------
 ;	 function fixed_update
 ;	-----------------------------------------
 _fixed_update:
-;	dino.c:229: while (1) {
+;	src/dino.c:229: while (1) {
 00109$:
-;	dino.c:230: if (gameState==START) {
+;	src/dino.c:230: if (gameState==START) {
 	mov	a,#0x34
 	cjne	a,_gameState,00141$
 	sjmp	00142$
 00141$:
 	ljmp	00107$
 00142$:
-;	dino.c:258: }
+;	src/dino.c:258: }
 	setb	_fixed_update_sloc0_1_0
 	jbc	ea,00143$
 	clr	_fixed_update_sloc0_1_0
 00143$:
-;	dino.c:232: state=3;
+;	src/dino.c:232: state=3;
 	mov	_state,#0x03
-;	dino.c:233: sub_state=0;
+;	src/dino.c:233: sub_state=0;
 	mov	_sub_state,#0x00
-;	dino.c:236: if (!check_cactus(map, dinosaurPosition, 0)) {
+;	src/dino.c:236: if (!check_cactus(map, dinosaurPosition, 0)) {
 	mov	_check_cactus_PARM_2,_dinosaurPosition
 	clr	a
 	mov	(_check_cactus_PARM_2 + 1),a
@@ -1304,7 +1304,7 @@ _fixed_update:
 	jz	00144$
 	ljmp	00102$
 00144$:
-;	dino.c:237: add1 = check_cactus(map, 0, 8);
+;	src/dino.c:237: add1 = check_cactus(map, 0, 8);
 	clr	a
 	mov	_check_cactus_PARM_2,a
 	mov	(_check_cactus_PARM_2 + 1),a
@@ -1314,7 +1314,7 @@ _fixed_update:
 	mov	b, #0x40
 	lcall	_check_cactus
 	mov	r7, dpl
-;	dino.c:238: add2 = check_cactus(map, 0, 0);
+;	src/dino.c:238: add2 = check_cactus(map, 0, 0);
 	clr	a
 	mov	_check_cactus_PARM_2,a
 	mov	(_check_cactus_PARM_2 + 1),a
@@ -1326,25 +1326,25 @@ _fixed_update:
 	lcall	_check_cactus
 	mov	r6, dpl
 	pop	ar7
-;	dino.c:239: map[0][0] = map[0][0] << 1;
+;	src/dino.c:239: map[0][0] = map[0][0] << 1;
 	mov	a,_map
 	add	a,acc
 	mov	r5,a
 	mov	_map,r5
-;	dino.c:240: map[0][0] += add1;
+;	src/dino.c:240: map[0][0] += add1;
 	mov	a,r7
 	add	a, _map
 	mov	_map,a
-;	dino.c:241: map[0][1] = map[0][1] << 1;
+;	src/dino.c:241: map[0][1] = map[0][1] << 1;
 	mov	a,(_map + 0x0001)
 	add	a,acc
 	mov	r7,a
 	mov	(_map + 0x0001),r7
-;	dino.c:242: map[0][1] += add2;
+;	src/dino.c:242: map[0][1] += add2;
 	mov	a,r6
 	add	a, (_map + 0x0001)
 	mov	(_map + 0x0001),a
-;	dino.c:244: add1 = check_cactus(map, 1, 8);
+;	src/dino.c:244: add1 = check_cactus(map, 1, 8);
 	mov	_check_cactus_PARM_2,#0x01
 	mov	(_check_cactus_PARM_2 + 1),#0x00
 	mov	_check_cactus_PARM_3,#0x08
@@ -1353,7 +1353,7 @@ _fixed_update:
 	mov	b, #0x40
 	lcall	_check_cactus
 	mov	r7, dpl
-;	dino.c:245: add2 = check_cactus(map, 1, 0);
+;	src/dino.c:245: add2 = check_cactus(map, 1, 0);
 	mov	_check_cactus_PARM_2,#0x01
 	clr	a
 	mov	(_check_cactus_PARM_2 + 1),a
@@ -1365,26 +1365,26 @@ _fixed_update:
 	lcall	_check_cactus
 	mov	r6, dpl
 	pop	ar7
-;	dino.c:246: map[1][0] = map[1][0] << 1;
+;	src/dino.c:246: map[1][0] = map[1][0] << 1;
 	mov	a,(_map + 0x0002)
 	add	a,acc
 	mov	r5,a
 	mov	(_map + 0x0002),r5
-;	dino.c:247: map[1][0] += add1;
+;	src/dino.c:247: map[1][0] += add1;
 	mov	a,r7
 	add	a, (_map + 0x0002)
 	mov	(_map + 0x0002),a
-;	dino.c:248: map[1][1] = map[1][1] << 1;
+;	src/dino.c:248: map[1][1] = map[1][1] << 1;
 	mov	a,(_map + 0x0003)
 	add	a,acc
 	mov	r7,a
 	mov	(_map + 0x0003),r7
-;	dino.c:249: map[1][1] += add2;
+;	src/dino.c:249: map[1][1] += add2;
 	mov	a,r6
 	add	a, (_map + 0x0003)
 	mov	(_map + 0x0003),a
 00102$:
-;	dino.c:251: if (check_cactus(map, dinosaurPosition, 0)) {
+;	src/dino.c:251: if (check_cactus(map, dinosaurPosition, 0)) {
 	mov	_check_cactus_PARM_2,_dinosaurPosition
 	clr	a
 	mov	(_check_cactus_PARM_2 + 1),a
@@ -1395,101 +1395,101 @@ _fixed_update:
 	lcall	_check_cactus
 	mov	a, dpl
 	jz	00104$
-;	dino.c:252: gameState = GAMEOVER;
+;	src/dino.c:252: gameState = GAMEOVER;
 	mov	_gameState,#0x35
 	sjmp	00105$
 00104$:
-;	dino.c:254: score++;
+;	src/dino.c:254: score++;
 	mov	a,_score
 	inc	a
 	mov	_score,a
 00105$:
-;	dino.c:256: sub_state=2;
+;	src/dino.c:256: sub_state=2;
 	mov	_sub_state,#0x02
-;	dino.c:257: rendered=0;
+;	src/dino.c:257: rendered=0;
 	mov	_rendered,#0x00
 	mov	c,_fixed_update_sloc0_1_0
 	mov	ea,c
 00107$:
-;	dino.c:260: ThreadYield();
+;	src/dino.c:260: ThreadYield();
 	lcall	_ThreadYield
-;	dino.c:262: }
+;	src/dino.c:262: }
 	ljmp	00109$
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	dino.c:265: void main() {
+;	src/dino.c:265: void main() {
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	dino.c:266: LCD_Init();          // Initialize LCD
+;	src/dino.c:266: LCD_Init();          // Initialize LCD
 	lcall	_LCD_Init
-;	dino.c:267: Init_Keypad();       // Initialize Keypad
+;	src/dino.c:267: Init_Keypad();       // Initialize Keypad
 	lcall	_Init_Keypad
-;	dino.c:270: gameState = READY;
+;	src/dino.c:270: gameState = READY;
 	mov	_gameState,#0x33
-;	dino.c:271: score = 0;
+;	src/dino.c:271: score = 0;
 	mov	_score,#0x00
-;	dino.c:272: rendered = 0;
+;	src/dino.c:272: rendered = 0;
 	mov	_rendered,#0x00
-;	dino.c:273: difficulty = 0;
+;	src/dino.c:273: difficulty = 0;
 	mov	_difficulty,#0x00
-;	dino.c:274: dinosaurPosition = 0;
+;	src/dino.c:274: dinosaurPosition = 0;
 	mov	_dinosaurPosition,#0x00
-;	dino.c:275: nextCactusRow = 0;
+;	src/dino.c:275: nextCactusRow = 0;
 	mov	_nextCactusRow,#0x00
-;	dino.c:276: lastKeyState=0;
+;	src/dino.c:276: lastKeyState=0;
 	mov	_lastKeyState,#0x00
-;	dino.c:277: state=0;
+;	src/dino.c:277: state=0;
 	mov	_state,#0x00
-;	dino.c:278: sub_state=0;
+;	src/dino.c:278: sub_state=0;
 	mov	_sub_state,#0x00
-;	dino.c:280: LCD_set_symbol(0x08, dinosaur); // bitmap for dinosaur starts at 0x10
+;	src/dino.c:280: LCD_set_symbol(0x08, dinosaur); // bitmap for dinosaur starts at 0x10
 	mov	_LCD_set_symbol_PARM_2,#_dinosaur
 	mov	(_LCD_set_symbol_PARM_2 + 1),#(_dinosaur >> 8)
 	mov	(_LCD_set_symbol_PARM_2 + 2),#0x80
 	mov	dpl, #0x08
 	lcall	_LCD_set_symbol
-;	dino.c:281: LCD_set_symbol(0x10, cactus);   // bitmap for cactus starts at 0x20
+;	src/dino.c:281: LCD_set_symbol(0x10, cactus);   // bitmap for cactus starts at 0x20
 	mov	_LCD_set_symbol_PARM_2,#_cactus
 	mov	(_LCD_set_symbol_PARM_2 + 1),#(_cactus >> 8)
 	mov	(_LCD_set_symbol_PARM_2 + 2),#0x80
 	mov	dpl, #0x10
 	lcall	_LCD_set_symbol
-;	dino.c:283: map[0][0] = 0x06; // 0000_0111
+;	src/dino.c:283: map[0][0] = 0x06; // 0000_0111
 	mov	_map,#0x06
-;	dino.c:284: map[0][1] = 0x04; // 0000_0100 
+;	src/dino.c:284: map[0][1] = 0x04; // 0000_0100 
 	mov	(_map + 0x0001),#0x04
-;	dino.c:285: map[1][0] = 0x00; // 0000_0000 
+;	src/dino.c:285: map[1][0] = 0x00; // 0000_0000 
 	mov	(_map + 0x0002),#0x00
-;	dino.c:286: map[1][1] = 0x20; // 0010_0000
+;	src/dino.c:286: map[1][1] = 0x20; // 0010_0000
 	mov	(_map + 0x0003),#0x20
-;	dino.c:289: ThreadCreate(ctrl_thread);
+;	src/dino.c:289: ThreadCreate(ctrl_thread);
 	mov	dptr,#_ctrl_thread
 	lcall	_ThreadCreate
-;	dino.c:290: ThreadCreate(render_thread);
+;	src/dino.c:290: ThreadCreate(render_thread);
 	mov	dptr,#_render_thread
 	lcall	_ThreadCreate
-;	dino.c:291: fixed_update();
-;	dino.c:292: }
+;	src/dino.c:291: fixed_update();
+;	src/dino.c:292: }
 	ljmp	_fixed_update
 ;------------------------------------------------------------
 ;Allocation info for local variables in function '_sdcc_gsinit_startup'
 ;------------------------------------------------------------
-;	dino.c:295: void _sdcc_gsinit_startup(void) {
+;	src/dino.c:295: void _sdcc_gsinit_startup(void) {
 ;	-----------------------------------------
 ;	 function _sdcc_gsinit_startup
 ;	-----------------------------------------
 __sdcc_gsinit_startup:
-;	dino.c:298: __endasm;
+;	src/dino.c:298: __endasm;
 	ljmp	_Bootstrap
-;	dino.c:299: }
+;	src/dino.c:299: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function '_mcs51_genRAMCLEAR'
 ;------------------------------------------------------------
-;	dino.c:302: void _mcs51_genRAMCLEAR(void) {}
+;	src/dino.c:302: void _mcs51_genRAMCLEAR(void) {}
 ;	-----------------------------------------
 ;	 function _mcs51_genRAMCLEAR
 ;	-----------------------------------------
@@ -1498,7 +1498,7 @@ __mcs51_genRAMCLEAR:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function '_mcs51_genXINIT'
 ;------------------------------------------------------------
-;	dino.c:303: void _mcs51_genXINIT(void) {}
+;	src/dino.c:303: void _mcs51_genXINIT(void) {}
 ;	-----------------------------------------
 ;	 function _mcs51_genXINIT
 ;	-----------------------------------------
@@ -1507,7 +1507,7 @@ __mcs51_genXINIT:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function '_mcs51_genXRAMCLEAR'
 ;------------------------------------------------------------
-;	dino.c:304: void _mcs51_genXRAMCLEAR(void) {}
+;	src/dino.c:304: void _mcs51_genXRAMCLEAR(void) {}
 ;	-----------------------------------------
 ;	 function _mcs51_genXRAMCLEAR
 ;	-----------------------------------------
@@ -1516,14 +1516,14 @@ __mcs51_genXRAMCLEAR:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'timer0_ISR'
 ;------------------------------------------------------------
-;	dino.c:307: void timer0_ISR(void) __interrupt(1) {
+;	src/dino.c:307: void timer0_ISR(void) __interrupt(1) {
 ;	-----------------------------------------
 ;	 function timer0_ISR
 ;	-----------------------------------------
 _timer0_ISR:
-;	dino.c:310: __endasm;
+;	src/dino.c:310: __endasm;
 	ljmp	_myTimer0Handler
-;	dino.c:311: }
+;	src/dino.c:311: }
 	reti
 ;	eliminated unneeded mov psw,# (no regs used in bank)
 ;	eliminated unneeded push/pop not_psw

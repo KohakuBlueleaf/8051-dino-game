@@ -8,7 +8,6 @@
 *.rel
 *.rst
 *.sym
-*.hex
 
 # Prerequisites
 *.d

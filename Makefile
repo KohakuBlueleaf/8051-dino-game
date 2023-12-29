@@ -1,4 +1,5 @@
 # makefile for building the project with cooperative multithreading
+SOURCE_DIR = ./src
 BUILD_DIR = ./build
 
 CC = sdcc
@@ -6,8 +7,8 @@ CFLAGS = --opt-code-speed -c --std-sdcc99 --model-small
 LDFLAGS =
 
 # Define the object files needed for the final executable
-SOURCES = $(wildcard *.c)
-BASENAME = $(SOURCES:%.c=%)
+SOURCES = $(wildcard $(SOURCE_DIR)/*.c)
+BASENAME = $(SOURCES:$(SOURCE_DIR)/%.c=%)
 BASEDIRS = $(BASENAME:%=$(BUILD_DIR)/%)
 OBJ_FILES = $(foreach base,$(BASENAME),$(BUILD_DIR)/$(base)/$(base).rel)
 
@@ -16,7 +17,7 @@ OBJ_FILES = $(foreach base,$(BASENAME),$(BUILD_DIR)/$(base)/$(base).rel)
 all: $(BASENAME) dino.hex
 dir: $(BUILD_DIR) $(BASEDIRS)
 test:
-	echo $(OBJ_FILES)
+	echo $(BASENAME)
 
 $(BUILD_DIR):
 	mkdir "$@"
@@ -24,7 +25,7 @@ $(BUILD_DIR):
 $(BASEDIRS):
 	mkdir "$@"
 
-$(BASENAME): % : %.c
+$(BASENAME): % : $(SOURCE_DIR)/%.c
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$@/$@.rel $<
 
 # Rule for creating the final executable

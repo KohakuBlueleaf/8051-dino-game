@@ -285,7 +285,7 @@ _AnyKeyPressed_sloc0_1_0:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Init_Keypad'
 ;------------------------------------------------------------
-;	keylib.c:13: void Init_Keypad(void) {
+;	src/keylib.c:13: void Init_Keypad(void) {
 ;	-----------------------------------------
 ;	 function Init_Keypad
 ;	-----------------------------------------
@@ -298,123 +298,123 @@ _Init_Keypad:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	keylib.c:14: P3_3 = 1; // input mode from AND gate.
+;	src/keylib.c:14: P3_3 = 1; // input mode from AND gate.
 ;	assignBit
 	setb	_P3_3
-;	keylib.c:16: P0 = 0xf0; // configure column 3 bits (top) as input,
+;	src/keylib.c:16: P0 = 0xf0; // configure column 3 bits (top) as input,
 	mov	_P0,#0xf0
-;	keylib.c:20: }
+;	src/keylib.c:20: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'AnyKeyPressed'
 ;------------------------------------------------------------
-;	keylib.c:26: char AnyKeyPressed(void) {
+;	src/keylib.c:26: char AnyKeyPressed(void) {
 ;	-----------------------------------------
 ;	 function AnyKeyPressed
 ;	-----------------------------------------
 _AnyKeyPressed:
-;	keylib.c:27: P0 = 0xf0;  // set all rows to pull-down
+;	src/keylib.c:27: P0 = 0xf0;  // set all rows to pull-down
 	mov	_P0,#0xf0
-;	keylib.c:28: return !P3_3; // true if any button is connected to pull-down
+;	src/keylib.c:28: return !P3_3; // true if any button is connected to pull-down
 	mov	c,_P3_3
 	cpl	c
 	mov  _AnyKeyPressed_sloc0_1_0,c
 	clr	a
 	rlc	a
 	mov	dpl,a
-;	keylib.c:29: }
+;	src/keylib.c:29: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'KeyToChar'
 ;------------------------------------------------------------
-;	keylib.c:37: char KeyToChar(void) {
+;	src/keylib.c:37: char KeyToChar(void) {
 ;	-----------------------------------------
 ;	 function KeyToChar
 ;	-----------------------------------------
 _KeyToChar:
-;	keylib.c:38: P0 = 0xf7; // test the top row
+;	src/keylib.c:38: P0 = 0xf7; // test the top row
 	mov	_P0,#0xf7
-;	keylib.c:39: if (P0 == 0xb7) { return '1'; }
+;	src/keylib.c:39: if (P0 == 0xb7) { return '1'; }
 	mov	a,#0xb7
 	cjne	a,_P0,00107$
 	mov	dpl, #0x31
 	ret
 00107$:
-;	keylib.c:40: else if (P0 == 0xd7) { return '2'; }
+;	src/keylib.c:40: else if (P0 == 0xd7) { return '2'; }
 	mov	a,#0xd7
 	cjne	a,_P0,00104$
 	mov	dpl, #0x32
 	ret
 00104$:
-;	keylib.c:41: else if (P0 == 0xe7) { return '3'; }
+;	src/keylib.c:41: else if (P0 == 0xe7) { return '3'; }
 	mov	a,#0xe7
 	cjne	a,_P0,00108$
 	mov	dpl, #0x33
 	ret
 00108$:
-;	keylib.c:42: P0 = 0xfb; // test the next row
+;	src/keylib.c:42: P0 = 0xfb; // test the next row
 	mov	_P0,#0xfb
-;	keylib.c:43: if (P0 == 0xbb) { return '4';}
+;	src/keylib.c:43: if (P0 == 0xbb) { return '4';}
 	mov	a,#0xbb
 	cjne	a,_P0,00115$
 	mov	dpl, #0x34
 	ret
 00115$:
-;	keylib.c:44: else if (P0 == 0xdb) { return '5'; }
+;	src/keylib.c:44: else if (P0 == 0xdb) { return '5'; }
 	mov	a,#0xdb
 	cjne	a,_P0,00112$
 	mov	dpl, #0x35
 	ret
 00112$:
-;	keylib.c:45: else if (P0 == 0xeb) { return '6'; }
+;	src/keylib.c:45: else if (P0 == 0xeb) { return '6'; }
 	mov	a,#0xeb
 	cjne	a,_P0,00116$
 	mov	dpl, #0x36
 	ret
 00116$:
-;	keylib.c:46: P0 = 0xfd;  // test the 3rd row
+;	src/keylib.c:46: P0 = 0xfd;  // test the 3rd row
 	mov	_P0,#0xfd
-;	keylib.c:47: if (P0 == 0xbd) { return '7';}
+;	src/keylib.c:47: if (P0 == 0xbd) { return '7';}
 	mov	a,#0xbd
 	cjne	a,_P0,00123$
 	mov	dpl, #0x37
 	ret
 00123$:
-;	keylib.c:48: else if (P0 == 0xdd) { return '8'; }
+;	src/keylib.c:48: else if (P0 == 0xdd) { return '8'; }
 	mov	a,#0xdd
 	cjne	a,_P0,00120$
 	mov	dpl, #0x38
 	ret
 00120$:
-;	keylib.c:49: else if (P0 == 0xed) { return '9'; }
+;	src/keylib.c:49: else if (P0 == 0xed) { return '9'; }
 	mov	a,#0xed
 	cjne	a,_P0,00124$
 	mov	dpl, #0x39
 	ret
 00124$:
-;	keylib.c:50: P0 = 0xfe;  // test the last row
+;	src/keylib.c:50: P0 = 0xfe;  // test the last row
 	mov	_P0,#0xfe
-;	keylib.c:51: if (P0 == 0xbe) { return '*'; }
+;	src/keylib.c:51: if (P0 == 0xbe) { return '*'; }
 	mov	a,#0xbe
 	cjne	a,_P0,00131$
 	mov	dpl, #0x2a
 	ret
 00131$:
-;	keylib.c:52: else if (P0 == 0xde) { return '0'; }
+;	src/keylib.c:52: else if (P0 == 0xde) { return '0'; }
 	mov	a,#0xde
 	cjne	a,_P0,00128$
 	mov	dpl, #0x30
 	ret
 00128$:
-;	keylib.c:53: else if (P0 == 0xee) { return '#'; }
+;	src/keylib.c:53: else if (P0 == 0xee) { return '#'; }
 	mov	a,#0xee
 	cjne	a,_P0,00132$
 	mov	dpl, #0x23
 	ret
 00132$:
-;	keylib.c:54: return 0;
+;	src/keylib.c:54: return 0;
 	mov	dpl, #0x00
-;	keylib.c:55: }  
+;	src/keylib.c:55: }  
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

@@ -342,7 +342,7 @@ _ThreadYield_sloc0_1_0:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Bootstrap'
 ;------------------------------------------------------------
-;	preemptive.c:48: void Bootstrap(void) {
+;	src/preemptive.c:48: void Bootstrap(void) {
 ;	-----------------------------------------
 ;	 function Bootstrap
 ;	-----------------------------------------
@@ -355,41 +355,41 @@ _Bootstrap:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	preemptive.c:50: TMOD = 0x01;  // timer 1 mode 1(render), timer 0 mode 1(general)
+;	src/preemptive.c:50: TMOD = 0x01;  // timer 1 mode 1(render), timer 0 mode 1(general)
 	mov	_TMOD,#0x01
-;	preemptive.c:55: ET0 = 1; // 啟動 Timer 0 中斷 
+;	src/preemptive.c:55: ET0 = 1; // 啟動 Timer 0 中斷 
 ;	assignBit
 	setb	_ET0
-;	preemptive.c:57: TR0 = 1; // 啟動 Timer_0// set bit TR0 to start running timer 0
+;	src/preemptive.c:57: TR0 = 1; // 啟動 Timer_0// set bit TR0 to start running timer 0
 ;	assignBit
 	setb	_TR0
-;	preemptive.c:58: EA = 1;
+;	src/preemptive.c:58: EA = 1;
 ;	assignBit
 	setb	_EA
-;	preemptive.c:60: TH0 = 0;
+;	src/preemptive.c:60: TH0 = 0;
 	mov	_TH0,#0x00
-;	preemptive.c:61: TL0 = 0;
+;	src/preemptive.c:61: TL0 = 0;
 	mov	_TL0,#0x00
-;	preemptive.c:62: cnt0 = 0;
+;	src/preemptive.c:62: cnt0 = 0;
 	mov	_cnt0,#0x00
-;	preemptive.c:63: stay = 1;
+;	src/preemptive.c:63: stay = 1;
 	mov	_stay,#0x01
-;	preemptive.c:65: mask = 0b0000;
+;	src/preemptive.c:65: mask = 0b0000;
 	mov	_mask,#0x00
-;	preemptive.c:66: isAlive[0] = 0b0001; 
+;	src/preemptive.c:66: isAlive[0] = 0b0001; 
 	mov	_isAlive,#0x01
-;	preemptive.c:67: isAlive[1] = 0b0010; 
+;	src/preemptive.c:67: isAlive[1] = 0b0010; 
 	mov	(_isAlive + 0x0001),#0x02
-;	preemptive.c:68: isAlive[2] = 0b0100; 
+;	src/preemptive.c:68: isAlive[2] = 0b0100; 
 	mov	(_isAlive + 0x0002),#0x04
-;	preemptive.c:69: isAlive[3] = 0b1000;
+;	src/preemptive.c:69: isAlive[3] = 0b1000;
 	mov	(_isAlive + 0x0003),#0x08
-;	preemptive.c:70: ThreadCreate(main);
+;	src/preemptive.c:70: ThreadCreate(main);
 	mov	dptr,#_main
 	lcall	_ThreadCreate
-;	preemptive.c:71: curThread = 0; 
+;	src/preemptive.c:71: curThread = 0; 
 	mov	_curThread,#0x00
-;	preemptive.c:72: RESTORESTATE;
+;	src/preemptive.c:72: RESTORESTATE;
 	mov	a,_curThread
 	add	a, #_savedSP
 	mov	r1,a
@@ -399,36 +399,36 @@ _Bootstrap:
 	pop DPL 
 	pop B 
 	pop ACC 
-;	preemptive.c:73: }
+;	src/preemptive.c:73: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ThreadCreate'
 ;------------------------------------------------------------
 ;fp                        Allocated to registers 
 ;------------------------------------------------------------
-;	preemptive.c:82: ThreadID ThreadCreate(FunctionPtr fp) {
+;	src/preemptive.c:82: ThreadID ThreadCreate(FunctionPtr fp) {
 ;	-----------------------------------------
 ;	 function ThreadCreate
 ;	-----------------------------------------
 _ThreadCreate:
-;	preemptive.c:83: if(mask == 0b1111) return -1;
+;	src/preemptive.c:83: if(mask == 0b1111) return -1;
 	mov	a,#0x0f
 	cjne	a,_mask,00102$
 	mov	dpl, #0xff
 	ret
 00102$:
-;	preemptive.c:114: }
+;	src/preemptive.c:114: }
 	setb	_ThreadCreate_sloc0_1_0
 	jbc	ea,00137$
 	clr	_ThreadCreate_sloc0_1_0
 00137$:
-;	preemptive.c:85: for(i = 0; i < MAXTHREADS; i++) {
+;	src/preemptive.c:85: for(i = 0; i < MAXTHREADS; i++) {
 	mov	_i,#0x00
 00107$:
 	mov	a,#0x100 - 0x04
 	add	a,_i
 	jc	00105$
-;	preemptive.c:86: if(((mask) & (0b0001 << i)) == 0) {
+;	src/preemptive.c:86: if(((mask) & (0b0001 << i)) == 0) {
 	mov	b,_i
 	inc	b
 	mov	r6,#0x01
@@ -452,7 +452,7 @@ _ThreadCreate:
 	mov	a,r6
 	orl	a,r7
 	jnz	00108$
-;	preemptive.c:87: mask |= (0b0001 << i);
+;	src/preemptive.c:87: mask |= (0b0001 << i);
 	mov	b,_i
 	inc	b
 	mov	a,#0x01
@@ -462,27 +462,27 @@ _ThreadCreate:
 00143$:
 	djnz	b,00142$
 	orl	_mask,a
-;	preemptive.c:88: newThread = i;
+;	src/preemptive.c:88: newThread = i;
 	mov	_newThread,_i
-;	preemptive.c:89: break;
+;	src/preemptive.c:89: break;
 	sjmp	00105$
 00108$:
-;	preemptive.c:85: for(i = 0; i < MAXTHREADS; i++) {
+;	src/preemptive.c:85: for(i = 0; i < MAXTHREADS; i++) {
 	mov	a,_i
 	inc	a
 	mov	_i,a
 	sjmp	00107$
 00105$:
-;	preemptive.c:93: tmp = SP; // tmp : old thread stack pointer
+;	src/preemptive.c:93: tmp = SP; // tmp : old thread stack pointer
 	mov	_tmp,_SP
-;	preemptive.c:94: SP = 0x3F + (i << 4); // SP: new thread stack pointer
+;	src/preemptive.c:94: SP = 0x3F + (i << 4); // SP: new thread stack pointer
 	mov	a,_i
 	swap	a
 	anl	a,#0xf0
 	mov	r7,a
 	add	a,#0x3f
 	mov	_SP,a
-;	preemptive.c:104: __endasm;
+;	src/preemptive.c:104: __endasm;
 	push	DPL
 	push	DPH
 	mov	A, #0
@@ -490,42 +490,42 @@ _ThreadCreate:
 	push	A
 	push	A
 	push	A
-;	preemptive.c:106: tmp2 = (i << 3);
+;	src/preemptive.c:106: tmp2 = (i << 3);
 	mov	a,_i
 	mov	r7,a
 	swap	a
 	rr	a
 	anl	a,#0xf8
 	mov	_tmp2,a
-;	preemptive.c:110: __endasm;
+;	src/preemptive.c:110: __endasm;
 	push	_tmp2
-;	preemptive.c:112: savedSP[newThread] = SP;
+;	src/preemptive.c:112: savedSP[newThread] = SP;
 	mov	a,_newThread
 	add	a, #_savedSP
 	mov	r0,a
 	mov	@r0,_SP
-;	preemptive.c:113: SP = tmp; // let the old thread continue
+;	src/preemptive.c:113: SP = tmp; // let the old thread continue
 	mov	_SP,_tmp
 	mov	c,_ThreadCreate_sloc0_1_0
 	mov	ea,c
-;	preemptive.c:115: return newThread;
+;	src/preemptive.c:115: return newThread;
 	mov	dpl, _newThread
-;	preemptive.c:116: }
+;	src/preemptive.c:116: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ThreadYield'
 ;------------------------------------------------------------
-;	preemptive.c:126: void ThreadYield(void) {
+;	src/preemptive.c:126: void ThreadYield(void) {
 ;	-----------------------------------------
 ;	 function ThreadYield
 ;	-----------------------------------------
 _ThreadYield:
-;	preemptive.c:139: }
+;	src/preemptive.c:139: }
 	setb	_ThreadYield_sloc0_1_0
 	jbc	ea,00144$
 	clr	_ThreadYield_sloc0_1_0
 00144$:
-;	preemptive.c:128: SAVESTATE;
+;	src/preemptive.c:128: SAVESTATE;
 	push ACC 
 	push B 
 	push DPL 
@@ -535,9 +535,9 @@ _ThreadYield:
 	add	a, #_savedSP
 	mov	r0,a
 	mov	@r0,_SP
-;	preemptive.c:129: do {
+;	src/preemptive.c:129: do {
 00107$:
-;	preemptive.c:130: if(cnt0>(3-speed[difficulty]) && gameState==START){
+;	src/preemptive.c:130: if(cnt0>(3-speed[difficulty]) && gameState==START){
 	mov	a,_difficulty
 	mov	dptr,#_speed
 	movc	a,@a+dptr
@@ -563,13 +563,13 @@ _ThreadYield:
 	jnc	00102$
 	mov	a,#0x34
 	cjne	a,_gameState,00102$
-;	preemptive.c:131: curThread=0;
+;	src/preemptive.c:131: curThread=0;
 	mov	_curThread,#0x00
-;	preemptive.c:132: cnt0=0;
+;	src/preemptive.c:132: cnt0=0;
 	mov	_cnt0,#0x00
 	sjmp	00103$
 00102$:
-;	preemptive.c:134: curThread = (curThread==1) ? 2 : 1;
+;	src/preemptive.c:134: curThread = (curThread==1) ? 2 : 1;
 	mov	a,#0x01
 	cjne	a,_curThread,00112$
 	mov	r7,#0x02
@@ -579,7 +579,7 @@ _ThreadYield:
 00113$:
 	mov	_curThread,r7
 00103$:
-;	preemptive.c:136: if(mask & isAlive[curThread]) break;
+;	src/preemptive.c:136: if(mask & isAlive[curThread]) break;
 	mov	a,_curThread
 	add	a, #_isAlive
 	mov	r1,a
@@ -587,7 +587,7 @@ _ThreadYield:
 	mov	r7,a
 	anl	a,_mask
 	jz	00107$
-;	preemptive.c:138: RESTORESTATE;
+;	src/preemptive.c:138: RESTORESTATE;
 	mov	a,_curThread
 	add	a, #_savedSP
 	mov	r1,a
@@ -599,23 +599,23 @@ _ThreadYield:
 	pop ACC 
 	mov	c,_ThreadYield_sloc0_1_0
 	mov	ea,c
-;	preemptive.c:140: }
+;	src/preemptive.c:140: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'myTimer0Handler'
 ;------------------------------------------------------------
-;	preemptive.c:146: void myTimer0Handler(){
+;	src/preemptive.c:146: void myTimer0Handler(){
 ;	-----------------------------------------
 ;	 function myTimer0Handler
 ;	-----------------------------------------
 _myTimer0Handler:
-;	preemptive.c:147: cnt0++;
+;	src/preemptive.c:147: cnt0++;
 	mov	a,_cnt0
 	inc	a
 	mov	_cnt0,a
-;	preemptive.c:150: __endasm;
+;	src/preemptive.c:150: __endasm;
 	reti
-;	preemptive.c:151: }
+;	src/preemptive.c:151: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

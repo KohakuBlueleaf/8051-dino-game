@@ -346,7 +346,7 @@ _LCD_write_string_PARM_3:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_ready'
 ;------------------------------------------------------------
-;	lcdlib.c:16: unsigned char LCD_ready(void) {
+;	src/lcdlib.c:16: unsigned char LCD_ready(void) {
 ;	-----------------------------------------
 ;	 function LCD_ready
 ;	-----------------------------------------
@@ -359,154 +359,154 @@ _LCD_ready:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	lcdlib.c:17: return lcd_ready;
+;	src/lcdlib.c:17: return lcd_ready;
 	mov	dpl, _lcd_ready
-;	lcdlib.c:18: }
+;	src/lcdlib.c:18: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_Init'
 ;------------------------------------------------------------
-;	lcdlib.c:21: void LCD_Init(void) {
+;	src/lcdlib.c:21: void LCD_Init(void) {
 ;	-----------------------------------------
 ;	 function LCD_Init
 ;	-----------------------------------------
 _LCD_Init:
-;	lcdlib.c:22: LCD_functionSet();
+;	src/lcdlib.c:22: LCD_functionSet();
 	lcall	_LCD_functionSet
-;	lcdlib.c:23: LCD_entryModeSet(1, 0); /* increment and no shift */
+;	src/lcdlib.c:23: LCD_entryModeSet(1, 0); /* increment and no shift */
 	mov	dpl, #0x06
 	lcall	_LCD_IRWrite
-;	lcdlib.c:24: LCD_displayOnOffControl(1, 0, 0); /* display on, cursor off and blinking off */
+;	src/lcdlib.c:24: LCD_displayOnOffControl(1, 0, 0); /* display on, cursor off and blinking off */
 	mov	dpl, #0x0c
 	lcall	_LCD_IRWrite
-;	lcdlib.c:25: lcd_ready = 1;
+;	src/lcdlib.c:25: lcd_ready = 1;
 	mov	_lcd_ready,#0x01
-;	lcdlib.c:26: }
+;	src/lcdlib.c:26: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_IRWrite'
 ;------------------------------------------------------------
 ;c                         Allocated to registers r7 
 ;------------------------------------------------------------
-;	lcdlib.c:29: void LCD_IRWrite(char c) {
+;	src/lcdlib.c:29: void LCD_IRWrite(char c) {
 ;	-----------------------------------------
 ;	 function LCD_IRWrite
 ;	-----------------------------------------
 _LCD_IRWrite:
 	mov	r7, dpl
-;	lcdlib.c:30: lcd_ready = 0;
+;	src/lcdlib.c:30: lcd_ready = 0;
 	mov	_lcd_ready,#0x00
-;	lcdlib.c:31: DB = (c & 0xf0); // high nibble, keep RS low
+;	src/lcdlib.c:31: DB = (c & 0xf0); // high nibble, keep RS low
 	mov	a,#0xf0
 	anl	a,r7
 	mov	_P1,a
-;	lcdlib.c:32: E = 1;  // pulse E
+;	src/lcdlib.c:32: E = 1;  // pulse E
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:33: E = 0;
+;	src/lcdlib.c:33: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:34: DB = (c << 4); // low nibble, keep RS low
+;	src/lcdlib.c:34: DB = (c << 4); // low nibble, keep RS low
 	mov	a,r7
 	swap	a
 	anl	a,#0xf0
 	mov	_P1,a
-;	lcdlib.c:35: E = 1;
+;	src/lcdlib.c:35: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:36: E = 0;
+;	src/lcdlib.c:36: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:37: delay(DELAY_AMOUNT);
+;	src/lcdlib.c:37: delay(DELAY_AMOUNT);
 	mov	dpl, #0x28
 	lcall	_delay
-;	lcdlib.c:38: lcd_ready = 1;
+;	src/lcdlib.c:38: lcd_ready = 1;
 	mov	_lcd_ready,#0x01
-;	lcdlib.c:39: }
+;	src/lcdlib.c:39: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_functionSet'
 ;------------------------------------------------------------
-;	lcdlib.c:42: void LCD_functionSet(void) {
+;	src/lcdlib.c:42: void LCD_functionSet(void) {
 ;	-----------------------------------------
 ;	 function LCD_functionSet
 ;	-----------------------------------------
 _LCD_functionSet:
-;	lcdlib.c:43: lcd_ready = 0;
+;	src/lcdlib.c:43: lcd_ready = 0;
 	mov	_lcd_ready,#0x00
-;	lcdlib.c:46: DB = 0x20;  // DB<7:4> = 0010, <RS,E,x,x>=0
+;	src/lcdlib.c:46: DB = 0x20;  // DB<7:4> = 0010, <RS,E,x,x>=0
 	mov	_P1,#0x20
-;	lcdlib.c:47: E = 1;
+;	src/lcdlib.c:47: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:48: E = 0;
+;	src/lcdlib.c:48: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:49: delay(DELAY_AMOUNT);
+;	src/lcdlib.c:49: delay(DELAY_AMOUNT);
 	mov	dpl, #0x28
 	lcall	_delay
-;	lcdlib.c:50: E = 1;
+;	src/lcdlib.c:50: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:51: E = 0;
+;	src/lcdlib.c:51: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:52: delay(DELAY_AMOUNT); // added, to ensure sufficient delay
+;	src/lcdlib.c:52: delay(DELAY_AMOUNT); // added, to ensure sufficient delay
 	mov	dpl, #0x28
 	lcall	_delay
-;	lcdlib.c:53: DB7 = 1; // 2-line model
+;	src/lcdlib.c:53: DB7 = 1; // 2-line model
 ;	assignBit
 	setb	_P1_7
-;	lcdlib.c:56: DB6 = 0; // 5x7 dots
+;	src/lcdlib.c:56: DB6 = 0; // 5x7 dots
 ;	assignBit
 	clr	_P1_6
-;	lcdlib.c:57: DB5 = 0; // 4-bit mode
+;	src/lcdlib.c:57: DB5 = 0; // 4-bit mode
 ;	assignBit
 	clr	_P1_5
-;	lcdlib.c:58: DB4 = 0; // 4-bit mode
+;	src/lcdlib.c:58: DB4 = 0; // 4-bit mode
 ;	assignBit
 	clr	_P1_4
-;	lcdlib.c:61: E = 1;
+;	src/lcdlib.c:61: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:62: E = 0;
+;	src/lcdlib.c:62: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:63: delay(DELAY_AMOUNT);
+;	src/lcdlib.c:63: delay(DELAY_AMOUNT);
 	mov	dpl, #0x28
 	lcall	_delay
-;	lcdlib.c:64: lcd_ready = 1;
+;	src/lcdlib.c:64: lcd_ready = 1;
 	mov	_lcd_ready,#0x01
-;	lcdlib.c:65: }
+;	src/lcdlib.c:65: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_write_char'
 ;------------------------------------------------------------
 ;c                         Allocated to registers r7 
 ;------------------------------------------------------------
-;	lcdlib.c:70: void LCD_write_char(char c) {
+;	src/lcdlib.c:70: void LCD_write_char(char c) {
 ;	-----------------------------------------
 ;	 function LCD_write_char
 ;	-----------------------------------------
 _LCD_write_char:
 	mov	r7, dpl
-;	lcdlib.c:71: lcd_ready = 0;
+;	src/lcdlib.c:71: lcd_ready = 0;
 	mov	_lcd_ready,#0x00
-;	lcdlib.c:72: RS = 1;
+;	src/lcdlib.c:72: RS = 1;
 ;	assignBit
 	setb	_P1_3
-;	lcdlib.c:73: DB = (c & 0xf0) | 0x08; //; keep the RS
+;	src/lcdlib.c:73: DB = (c & 0xf0) | 0x08; //; keep the RS
 	mov	a,#0xf0
 	anl	a,r7
 	orl	a,#0x08
 	mov	_P1,a
-;	lcdlib.c:74: E = 1;
+;	src/lcdlib.c:74: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:75: E = 0;
+;	src/lcdlib.c:75: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:76: DB = (c << 4) | 0x08; // keep the RS
+;	src/lcdlib.c:76: DB = (c << 4) | 0x08; // keep the RS
 	mov	a,r7
 	swap	a
 	anl	a,#0xf0
@@ -514,18 +514,18 @@ _LCD_write_char:
 	mov	a,#0x08
 	orl	a,r7
 	mov	_P1,a
-;	lcdlib.c:77: E = 1;
+;	src/lcdlib.c:77: E = 1;
 ;	assignBit
 	setb	_P1_2
-;	lcdlib.c:78: E = 0;
+;	src/lcdlib.c:78: E = 0;
 ;	assignBit
 	clr	_P1_2
-;	lcdlib.c:79: delay(DELAY_AMOUNT);
+;	src/lcdlib.c:79: delay(DELAY_AMOUNT);
 	mov	dpl, #0x28
 	lcall	_delay
-;	lcdlib.c:80: lcd_ready = 1;
+;	src/lcdlib.c:80: lcd_ready = 1;
 	mov	_lcd_ready,#0x01
-;	lcdlib.c:81: }
+;	src/lcdlib.c:81: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'LCD_write_string'
@@ -534,7 +534,7 @@ _LCD_write_char:
 ;y                         Allocated with name '_LCD_write_string_PARM_3'
 ;str                       Allocated to registers 
 ;------------------------------------------------------------
-;	lcdlib.c:84: void LCD_write_string(char* str, int x, int y) {
+;	src/lcdlib.c:84: void LCD_write_string(char* str, int x, int y) {
 ;	-----------------------------------------
 ;	 function LCD_write_string
 ;	-----------------------------------------
@@ -542,7 +542,7 @@ _LCD_write_string:
 	mov	r5, dpl
 	mov	r6, dph
 	mov	r7, b
-;	lcdlib.c:85: while (*str) { // Check the character is not '\0'
+;	src/lcdlib.c:85: while (*str) { // Check the character is not '\0'
 	mov	r3,_LCD_write_string_PARM_3
 	mov	r4,(_LCD_write_string_PARM_3 + 1)
 00101$:
@@ -551,7 +551,7 @@ _LCD_write_string:
 	mov	b,r7
 	lcall	__gptrget
 	jz	00104$
-;	lcdlib.c:86: LCD_cursorGoTo(x, y);
+;	src/lcdlib.c:86: LCD_cursorGoTo(x, y);
 	mov	a,_LCD_write_string_PARM_2
 	rr	a
 	rr	a
@@ -573,7 +573,7 @@ _LCD_write_string:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	lcdlib.c:87: LCD_write_char(*str); // Write the current character to LCD
+;	src/lcdlib.c:87: LCD_write_char(*str); // Write the current character to LCD
 	mov	dpl,r5
 	mov	dph,r6
 	mov	b,r7
@@ -594,29 +594,29 @@ _LCD_write_string:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	lcdlib.c:88: str++; // Move to the next character
-;	lcdlib.c:89: y++;
+;	src/lcdlib.c:88: str++; // Move to the next character
+;	src/lcdlib.c:89: y++;
 	inc	r3
 	cjne	r3,#0x00,00101$
 	inc	r4
 	sjmp	00101$
 00104$:
-;	lcdlib.c:91: }
+;	src/lcdlib.c:91: }
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'delay'
 ;------------------------------------------------------------
 ;n                         Allocated to registers 
 ;------------------------------------------------------------
-;	lcdlib.c:94: void delay(unsigned char n) {
+;	src/lcdlib.c:94: void delay(unsigned char n) {
 ;	-----------------------------------------
 ;	 function delay
 ;	-----------------------------------------
 _delay:
-;	lcdlib.c:98: __endasm;
+;	src/lcdlib.c:98: __endasm;
 dhere:
 	djnz	dpl, dhere
-;	lcdlib.c:99: }
+;	src/lcdlib.c:99: }
 	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
