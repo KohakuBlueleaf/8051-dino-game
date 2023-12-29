@@ -14,7 +14,7 @@ OBJ_FILES = $(foreach base,$(BASENAME),$(BUILD_DIR)/$(base)/$(base).rel)
 
 
 # Default target for when you just run `make`
-all: $(BASENAME) dino.hex
+all: |dir $(BASENAME) dino.hex
 dir: $(BUILD_DIR) $(BASEDIRS)
 test:
 	echo $(BASENAME)
