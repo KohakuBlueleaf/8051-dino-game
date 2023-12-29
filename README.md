@@ -1,4 +1,4 @@
-# CKPT5
+# NTHU-2023-OS-8051-dino-game
 
 ## Compile
 
