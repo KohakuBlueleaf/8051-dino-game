@@ -1,6 +1,8 @@
 #include <8051.h>
+#include "types.h"
 #include "static_globals.h"
 #include "lcdlib.h" 
+
 
 /* @@@ change to a different location if needed. 
 It just needs a bit, no need to be a char. */
@@ -13,7 +15,7 @@ It just needs a bit, no need to be a char. */
 #define E P1_2
 
 
-unsigned char LCD_ready(void) {
+bool LCD_ready(void) {
     return lcd_ready;
 }
 
@@ -82,6 +84,7 @@ void LCD_write_char(char c) {
 
 
 void delay(unsigned char n) {
+    n;
     __asm
         dhere:
             djnz dpl, dhere

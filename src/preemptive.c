@@ -5,6 +5,7 @@
 #include <8051.h>
 #include "types.h"
 #include "static_globals.h"
+#include "utils.h"
 #include "dino.h"
 #include "preemptive.h"
 
@@ -81,6 +82,7 @@ void Bootstrap(void) {
  * return no argument.
  */
 ThreadID ThreadCreate(FunctionPtr fp) {
+    fp;
     if(mask == 0b1111) return -1;
     for(i = 0; i < MAXTHREADS; i++) {
         if(((mask) & (0b0001 << i)) == 0) {
@@ -123,6 +125,7 @@ ThreadID ThreadCreate(FunctionPtr fp) {
  */
 static const uchar speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 void ThreadYield(void) {
+    set_state(10, 10);
     SAVESTATE;
     do {
         if(cnt0>(3-speed[difficulty]) && game_state==START){
@@ -137,12 +140,21 @@ void ThreadYield(void) {
     } while (1);
     RESTORESTATE;
 }
+void ThreadYieldSimple(void) {
+    set_state(10, 10);
+    SAVESTATE;
+    do {
+        curThread = (curThread+1)%MAXTHREADS;
+        if(mask & isAlive[curThread]) break;
+    } while (1);
+    RESTORESTATE;
+}
 
 
 /**
  * @brief Just a counter
  */
-void myTimer0Handler(){
+void timer0_counter(void){
     cnt0++;
     __asm
         reti

@@ -2,4 +2,12 @@
 
 ## Compile
 
-Use `make` to build all the file. The program will be in `./build/dino.hex`
+Just `make` to build all the things.
+
+#### Test LCD
+
+Use `make lcd` to build the testlcd program. The compiled file will be in `build/testlcd.hex`
+
+#### Dino game
+
+Use `make din` to build the dino game porgram. The compiled file will be in `build/dino.hex`

@@ -1,3 +1,4 @@
+#include "types.h"
 #ifndef __LCDLIB_H__
 #define __LCDLIB_H__
 #define CLEAR_DISPLAY 1
@@ -72,8 +73,7 @@ void delay(unsigned char n) ;
 
 void LCD_function_set(void) ;
 void LCD_write_char(char c) ;
-// void LCD_write_string(char *line, unsigned char row, unsigned char col);
-unsigned char LCD_ready(void);
+bool LCD_ready(void);
 
 #define LCD_write_string(line, row) \
 { \

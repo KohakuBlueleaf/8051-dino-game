@@ -37,20 +37,20 @@ bool AnyKeyPressed(void) {
  */
 char KeyToChar(void) {
     P0 = 0xf7; // test the top row
-    if (P0 == 0xb7) { return '1'; }
-    else if (P0 == 0xd7) { return '2'; }
-    else if (P0 == 0xe7) { return '3'; }
-    P0 = 0xfb; // test the next row
-    if (P0 == 0xbb) { return '4';}
-    else if (P0 == 0xdb) { return '5'; }
-    else if (P0 == 0xeb) { return '6'; }
+    if (P0 == 0xb7) return '1';
+    else if (P0 == 0xd7) return '2';
+    else if (P0 == 0xe7) return '3';
+    P0 = 0xfb; // test the 2rd row
+    if (P0 == 0xbb) return '4';
+    else if (P0 == 0xdb) return '5';
+    else if (P0 == 0xeb) return '6';
     P0 = 0xfd;  // test the 3rd row
-    if (P0 == 0xbd) { return '7';}
-    else if (P0 == 0xdd) { return '8'; }
-    else if (P0 == 0xed) { return '9'; }
-    P0 = 0xfe;  // test the last row
-    if (P0 == 0xbe) { return '*'; }
-    else if (P0 == 0xde) { return '0'; }
-    else if (P0 == 0xee) { return '#'; }
+    if (P0 == 0xbd) return '7';
+    else if (P0 == 0xdd) return '8';
+    else if (P0 == 0xed) return '9';
+    P0 = 0xfe;  // test the 4th row
+    if (P0 == 0xbe) return '*';
+    else if (P0 == 0xde) return '0';
+    else if (P0 == 0xee) return '#';
     return 0;
 }  

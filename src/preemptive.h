@@ -19,6 +19,7 @@ typedef char Semaphore;
 typedef void (*FunctionPtr)(void);
 
 ThreadID ThreadCreate(FunctionPtr);
+void ThreadYieldSimple(void);
 void ThreadYield(void);
 void ThreadExit(void);
 

@@ -9,7 +9,7 @@
 #include "utils.h"
 
 
-void game_init(){
+void game_init(void){
     score = 121;
     rendered = 0;
     dino_position = 0;
@@ -31,7 +31,7 @@ bool check_cactus(uchar map[MAP_HEIGHT][MAP_WIDTH/8], uchar x, uchar y) {
  * @brief Function to handle keypad input and control logic
  * Will not be limited by timer
  */
-void ctrl_thread() {
+void ctrl_thread(void) {
     while(1) {
         set_state(1, 0);
         key_char = KeyToChar();  // Get the current key character
@@ -80,7 +80,7 @@ void ctrl_thread() {
  * Use "rendered" variable to check if we need to update the content
  * to reduce update frequency
  */
-void render_thread() {
+void render_thread(void) {
     while(1) {
         set_state(2, 0);
         if(!rendered){
@@ -130,7 +130,7 @@ void render_thread() {
  * period is defined by the difficulty
  */
 const uchar density[] = {0, 1, 2, 3, 1, 2, 3, 1, 2, 3};
-void fixed_update() {
+void fixed_update(void) {
     while (1) {
         if (game_state==START) {
             set_state(0, 1);
@@ -173,7 +173,7 @@ const char dinosaur[] = {0x07, 0x05, 0x06, 0x07, 0x14, 0x17, 0x0E, 0x0A};// 0x10
 const char cactus[] = {0x04, 0x05, 0x15, 0x15, 0x16, 0x0C, 0x04, 0x04}; // 0x20~0x27
 
 
-void main() {
+void main(void) {
     set_state(0, 0);
     LCD_Init();          // Initialize LCD
     Init_Keypad();       // Initialize Keypad
@@ -209,6 +209,6 @@ void _mcs51_genXRAMCLEAR(void) {}
 
 void timer0_ISR(void) __interrupt(1) {
     __asm
-        ljmp _myTimer0Handler
+        ljmp _timer0_counter
     __endasm;
 }
