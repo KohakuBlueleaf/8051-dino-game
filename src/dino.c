@@ -105,8 +105,8 @@ void render_thread(void) {
                 // No clean screen and return home to get more efficiency
                 set_state(2, 3);
                 for ( row = 0; row < MAP_HEIGHT; row++) {
+                    LCD_cursorGoTo(row, 0);
                     for ( col = 0; col < MAP_WIDTH; col++) {
-                        LCD_cursorGoTo(row, col);
                         if(row==dino_position && col==0) {
                             LCD_write_char(DINOSAUR); 
                         }else if (check_cactus(map, row, col)) {
@@ -138,23 +138,25 @@ void fixed_update(void) {
             uchar new=0;
             uchar add1=0;
             uchar add2=0;
+            new |= random()%(5-density[difficulty])==0;
             if (!check_cactus(map, dino_position, 0)) {
                 //update map randomly
                 set_state(0, 2);
-                new = random()%(5-density[difficulty])==0;
                 add1 = check_cactus(map, 0, 8);
-                add2 = new && random()%2 && !check_cactus(map, 1, 15) && !check_cactus(map, 0, 14);
+                add2 = new && random()%2 && !check_cactus(map, 1, 15);
                 map[0][0] = map[0][0] << 1;
                 map[0][0] += add1;
                 map[0][1] = map[0][1] << 1;
                 map[0][1] += add2;
+                new ^= add2;
                 
                 add1 = check_cactus(map, 1, 8);
-                add2 = (add2 ^ new) && !check_cactus(map, 0, 14) && !check_cactus(map, 1, 14);;
+                add2 = new && !check_cactus(map, 0, 14);
                 map[1][0] = map[1][0] << 1;
                 map[1][0] += add1;
                 map[1][1] = map[1][1] << 1;
                 map[1][1] += add2;
+                new ^= add2;
             }
             if (check_cactus(map, dino_position, 0) || score >= MAX_SCORE) {
                 game_state = GAMEOVER;
