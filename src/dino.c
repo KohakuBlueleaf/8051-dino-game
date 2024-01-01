@@ -12,7 +12,7 @@
 void game_init(){
     score = 121;
     rendered = 0;
-    dinosaurPosition = 0;
+    dino_position = 0;
     map[0][0] = 0x06; // 0000_0110
     map[0][1] = 0x04; // 0000_0100 
     map[1][0] = 0x00; // 0000_0000 
@@ -34,46 +34,46 @@ bool check_cactus(uchar map[MAP_HEIGHT][MAP_WIDTH/8], uchar x, uchar y) {
 void ctrl_thread() {
     while(1) {
         set_state(1, 0);
-        keyChar = KeyToChar();  // Get the current key character
-        if ((keyChar >= '0' && keyChar <= '9') 
-            || keyChar== SIGN_KEY
-            && (lastKeyState == '\0')
+        key_char = KeyToChar();  // Get the current key character
+        if ((key_char >= '0' && key_char <= '9') 
+            || key_char== SIGN_KEY
+            && (last_key == '\0')
         ){
-            lastKeyState = keyChar; 
+            last_key = key_char; 
         }
         set_state(1, 1);
         
-        if((keyChar || lastKeyState) || (keyChar != lastKeyState)) {
-            if(gameState==READY) {
+        if((key_char || last_key) || (key_char != last_key)) {
+            if(game_state==READY) {
                 set_state(1, 2);
                 // Handle difficulty level setting
                 // Wait for signal from keypad control thread for difficulty level
-                if ((lastKeyState >= '0' && lastKeyState <= '9') && (keyChar==SIGN_KEY)) {
-                    difficulty = lastKeyState - '0';
-                    lastKeyState = '\0';
+                if ((last_key >= '0' && last_key <= '9') && (key_char==SIGN_KEY)) {
+                    difficulty = last_key - '0';
+                    last_key = '\0';
                     rendered = 0;
                     game_init();
-                    gameState = START;
+                    game_state = START;
                 }
-            } else if (gameState==START) {
+            } else if (game_state==START) {
                 // Main game loop
                 // Handle dinosaur movement, cacti generation and movement
                 set_state(1, 3);
-                if (lastKeyState == UP_KEY && dinosaurPosition>0 ) {
-                    dinosaurPosition--;
+                if (last_key == UP_KEY && dino_position>0 ) {
+                    dino_position--;
                     rendered=0;
-                } else if (lastKeyState == DOWN_KEY && dinosaurPosition<1) {
-                    dinosaurPosition++;
+                } else if (last_key == DOWN_KEY && dino_position<1) {
+                    dino_position++;
                     rendered=0;
                 }
-                lastKeyState = '\0';
-            } else if (gameState==GAMEOVER){
+                last_key = '\0';
+            } else if (game_state==GAMEOVER){
                 set_state(1, 4);
-                if (lastKeyState == SIGN_KEY) {
-                    gameState = READY;
+                if (last_key == SIGN_KEY) {
+                    game_state = READY;
                     rendered = 0 ;
                 }
-                lastKeyState = '\0';
+                last_key = '\0';
             }
         }
         set_state(1, 5);
@@ -88,18 +88,14 @@ void ctrl_thread() {
  * to reduce update frequency
  */
 void render_thread() {
-    /**
-     * Note that LCD_write_string have some problem
-     * so we manually maintain the loop for it
-     */
     while(1) {
         set_state(2, 0);
         if(!rendered){
-            if(gameState == READY){
+            if(game_state == READY){
                 set_state(2, 1);
                 LCD_write_string("Choose a Level", 0);
                 LCD_write_string("To start game!", 1);
-            }else if(gameState == GAMEOVER){
+            }else if(game_state == GAMEOVER){
                 set_state(2, 2);
                 if(score < MAX_SCORE){
                     LCD_write_string("Game Over!", 0);
@@ -110,14 +106,14 @@ void render_thread() {
                 score_string[8] = ('0'+(score%100)/10);
                 score_string[9] = ('0'+(score%10));
                 LCD_write_string(score_string, 1);
-            }else if(gameState == START){
+            }else if(game_state == START){
                 // In game loop
                 // No clean screen and return home to get more efficiency
                 set_state(2, 3);
                 for ( row = 0; row < MAP_HEIGHT; row++) {
                     for ( col = 0; col < MAP_WIDTH; col++) {
                         LCD_cursorGoTo(row, col);
-                        if(row==dinosaurPosition && col==0) {
+                        if(row==dino_position && col==0) {
                             LCD_write_char(DINOSAUR); 
                         }else if (check_cactus(map, row, col)) { // If there's a cactus at this position
                             // LCD_cursorGoTo(row, col);
@@ -144,12 +140,12 @@ void render_thread() {
 const uchar density[] = {0, 1, 2, 3, 1, 2, 3, 1, 2, 3};
 void fixed_update() {
     while (1) {
-        if (gameState==START) {
+        if (game_state==START) {
             set_state(0, 1);
             uchar new=0;
             uchar add1=0;
             uchar add2=0;
-            if (!check_cactus(map, dinosaurPosition, 0)) {
+            if (!check_cactus(map, dino_position, 0)) {
                 set_state(0, 2);
                 new = random()%(5-density[difficulty])==0;
                 add1 = check_cactus(map, 0, 8);
@@ -166,9 +162,9 @@ void fixed_update() {
                 map[1][1] = map[1][1] << 1;
                 map[1][1] += add2;
             }
-            if (check_cactus(map, dinosaurPosition, 0) || score >= MAX_SCORE) {
-                gameState = GAMEOVER;
-            }else if(check_cactus(map, !dinosaurPosition, 0)){
+            if (check_cactus(map, dino_position, 0) || score >= MAX_SCORE) {
+                game_state = GAMEOVER;
+            }else if(check_cactus(map, !dino_position, 0)){
                 score++;
             }
             rendered=0;
@@ -190,7 +186,7 @@ void main() {
     Init_Keypad();       // Initialize Keypad
 
     // Initialize game variables
-    gameState = READY;
+    game_state = READY;
     difficulty = 0;
     random_number = xorshift(1);
     strcpy(score_string, "Score: 000");

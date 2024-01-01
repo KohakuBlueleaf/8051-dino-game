@@ -23,10 +23,10 @@ void LCD_IRWrite(char c); /* writes to the instruction register */
 void delay(unsigned char n) ;
 #define DELAY_AMOUNT 40
 
-#define LCD_entryModeSet(id, s) \
+#define LCD_entry_mode_set(id, s) \
     LCD_IRWrite(0x4 | ((id) << 1) | (s))
 
-#define LCD_displayOnOffControl(display, cursor, blinking) \
+#define LCD_display_on_off_control(display, cursor, blinking) \
     LCD_IRWrite(0x8 | ((display)<<2) | ((cursor) <<1) | (blinking))
 //! macros for LCD commands
 
@@ -70,7 +70,7 @@ void delay(unsigned char n) ;
     LCD_write_char(symb[7]); \
 }
 
-void LCD_functionSet(void) ;
+void LCD_function_set(void) ;
 void LCD_write_char(char c) ;
 // void LCD_write_string(char *line, unsigned char row, unsigned char col);
 unsigned char LCD_ready(void);

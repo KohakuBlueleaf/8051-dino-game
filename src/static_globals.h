@@ -8,16 +8,16 @@
 __data __at(0x18) char row;
 __data __at(0x19) char col;
 __data __at(0x1A) uchar res;
-__data __at(0x1B) char keyChar; // for game control to move the dinosaur
-__data __at(0x1C) char lastKeyState;
+__data __at(0x1B) char key_char; // for game control to move the dinosaur
+__data __at(0x1C) char last_key;
 __data __at(0x1D) bool lcd_ready; 
 __data __at(0x1E) bool rendered;
 __data __at(0x1F) unsigned char random_number;
 
 // Define global variables and game state
-__data __at(0x21) char gameState; // 3 NOT START, 4 start, 5 over
+__data __at(0x21) char game_state; // 3 NOT START, 4 start, 5 over
 __data __at(0x22) unsigned char score;
-__data __at(0x23) char dinosaurPosition; // 0 upper, 1 lower
+__data __at(0x23) char dino_position; // 0 upper, 1 lower
 __data __at(0x24) char difficulty;       //
 __data __at(0x25) char state;
 __data __at(0x26) char sub_state;

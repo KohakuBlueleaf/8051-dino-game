@@ -125,7 +125,7 @@ static const uchar speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 void ThreadYield(void) {
     SAVESTATE;
     do {
-        if(cnt0>(3-speed[difficulty]) && gameState==START){
+        if(cnt0>(3-speed[difficulty]) && game_state==START){
             curThread=0;
             cnt0=0;
         }else{

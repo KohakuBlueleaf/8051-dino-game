@@ -7,6 +7,7 @@
  * - read the pressed key; in case of multiple, read highest priority
  */
 #include <8051.h>
+#include "types.h"
 #include "keylib.h"
 
 
@@ -23,7 +24,7 @@ void Init_Keypad(void) {
 /*
  * boolean to quickly check if any key is pressed
  */
-char AnyKeyPressed(void) {
+bool AnyKeyPressed(void) {
     P0 = 0xf0;  // set all rows to pull-down
     return !P3_3; // true if any button is connected to pull-down
 }

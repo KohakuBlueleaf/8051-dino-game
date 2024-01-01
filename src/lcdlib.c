@@ -19,9 +19,9 @@ unsigned char LCD_ready(void) {
 
 
 void LCD_Init(void) {
-    LCD_functionSet();
-    LCD_entryModeSet(1, 0); /* increment and no shift */
-    LCD_displayOnOffControl(1, 0, 0); /* display on, cursor off and blinking off */
+    LCD_function_set();
+    LCD_entry_mode_set(1, 0); /* increment and no shift */
+    LCD_display_on_off_control(1, 0, 0); /* display on, cursor off and blinking off */
     lcd_ready = 1;
 }
 
@@ -39,7 +39,7 @@ void LCD_IRWrite(char c) {
 }
 
 
-void LCD_functionSet(void) {
+void LCD_function_set(void) {
     lcd_ready = 0;
     // The high nibble for the function set is actually sent twice
     // because this is how 4-bit mode works for the HD44780 controller.
@@ -79,16 +79,6 @@ void LCD_write_char(char c) {
     delay(DELAY_AMOUNT);
     lcd_ready = 1;
 }
-
-
-// void LCD_write_string(char *line, unsigned char r, unsigned char c){
-//     while(*line){
-//         LCD_cursorGoTo(r, c);
-//         LCD_write_char(*line);
-//         line++;
-//         c++;
-//     }
-// }
 
 
 void delay(unsigned char n) {
