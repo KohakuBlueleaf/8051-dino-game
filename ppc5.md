@@ -1,7 +1,8 @@
 <style>
     img{
-        max-width: 300px;
-        max-height: 200px;
+      max-height: 250px;
+      width: 100%;
+      object-fit: contain;
     }
 </style>
 
@@ -64,3 +65,47 @@ Change the `LCD_write_string` to be Macro which will be better. (passing const c
   ![1704095937134](image/ppc5/1704095937134.png)
 
 #### Part2, dino game
+
+##### Thread managements
+
+* Threads:
+  * fixed_update(thread 0):
+    * This thread is for checking the game result and updating map.
+    * This thread will only be enabled when timer counter have enough count(depends on difficulty)
+  * ctrl_thread(thread 1):
+    * This thread will read key press and check if the key press is triggering anything
+  * render_thread(thread 2):
+    * This thread will read game_state/dino position/map to render the whole scene.
+    * Only trigger the render process when needed. (map/state/position changed)
+
+All the thread use ThreadYield to switch between each other.
+fixed_update will only be choosed if counter reach the threshold(depends on diff)
+
+![1704123508241](image/ppc5/1704123508241.png)
+
+##### ctrl_thread
+
+In this thread, we first check the key input:
+![1704122998744](image/ppc5/1704122998744.png)
+
+If the input is needed to be check (new input), we check the game_state to decide how to process it:
+
+* READY: check the difficulty and # button.
+  * ![1704123118861](image/ppc5/1704123118861.png)
+* START: Main game loop, check 2/8 for moving dino.
+  * ![1704123127456](image/ppc5/1704123127456.png)
+* GAMEOVER: check # button which can trigger new game. (Additional)
+  * ![1704123140761](image/ppc5/1704123140761.png)
+
+##### render_thread
+
+This thread will utilize the LCD library (implemented in part1) to display string or map:
+
+* READY: Print the welcome slogan.
+  * ![1704124338994](image/ppc5/1704124338994.png)
+* START: Print the map
+  * ![1704124369636](image/ppc5/1704124369636.png)
+* GAMEOVER: Print the gameover slogan and score.
+  * ![1704124346949](image/ppc5/1704124346949.png)
+
+##### fixed_update

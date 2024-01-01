@@ -127,16 +127,18 @@ static const uchar speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 void ThreadYield(void) {
     set_state(10, 10);
     SAVESTATE;
+    if(cnt0>(3-speed[difficulty]) && game_state==START){
+        curThread=0;
+        cnt0=0;
+    }else{
+        // If yield from ctrl thread or fixed update.
+        // Enable render thread to display the changes.
+        curThread = (curThread==2) ? 1 : 2;
+    }
+    // If the target thread is closed, choose next thread.
     do {
-        if(cnt0>(3-speed[difficulty]) && game_state==START){
-            curThread=0;
-            cnt0=0;
-        }else{
-            // If yield from ctrl thread or fixed update.
-            // Enable render thread to display the changes.
-            curThread = (curThread==2) ? 1 : 2;
-        }
         if(mask & isAlive[curThread]) break;
+        curThread = (curThread+1)%MAXTHREADS;
     } while (1);
     RESTORESTATE;
 }
