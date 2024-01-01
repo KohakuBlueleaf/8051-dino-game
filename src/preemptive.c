@@ -125,7 +125,6 @@ ThreadID ThreadCreate(FunctionPtr fp) {
  */
 static const uchar speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 void ThreadYield(void) {
-    set_state(10, 10);
     SAVESTATE;
     if(cnt0>(3-speed[difficulty]) && game_state==START){
         curThread=0;
