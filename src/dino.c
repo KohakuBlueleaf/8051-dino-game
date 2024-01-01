@@ -13,6 +13,7 @@ void game_init(void){
     score = 121;
     rendered = 0;
     dino_position = 0;
+    cnt0 = 0;
     map[0][0] = 0x06; // 0000_0110
     map[0][1] = 0x04; // 0000_0100 
     map[1][0] = 0x00; // 0000_0000 
@@ -41,7 +42,7 @@ void ctrl_thread(void) {
         set_state(1, 1);
         
         if((key_char || last_key) || (key_char != last_key)) {
-            if(game_state==READY && key_char == SIGN_KEY) {
+            if(game_state==READY && last_key<='9' && last_key>='0' && key_char == SIGN_KEY) {
                 // Handle difficulty level setting
                 // Wait for signal from keypad control thread for difficulty level
                 set_state(1, 2);
