@@ -10,7 +10,7 @@ uchar random(void);
 
 
 // Debug utils, which can indicate the line of code.
-#define DEBUG
+// #define DEBUG
 #ifdef DEBUG
     #define set_state(s, ss) {\
         state = s;\
@@ -18,5 +18,4 @@ uchar random(void);
     }
 #else
     #define set_state(s, ss) {}
-#endif
 #endif
