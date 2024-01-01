@@ -35,26 +35,19 @@ void ctrl_thread() {
     while(1) {
         set_state(1, 0);
         key_char = KeyToChar();  // Get the current key character
-        if ((key_char >= '0' && key_char <= '9') 
-            || key_char== SIGN_KEY
-            && (last_key == '\0')
-        ){
+        if (key_char >= '0' && key_char <= '9'){
             last_key = key_char; 
-        }
+        } 
         set_state(1, 1);
         
         if((key_char || last_key) || (key_char != last_key)) {
-            if(game_state==READY) {
-                set_state(1, 2);
+            if(game_state==READY && key_char == SIGN_KEY) {
                 // Handle difficulty level setting
                 // Wait for signal from keypad control thread for difficulty level
-                if ((last_key >= '0' && last_key <= '9') && (key_char==SIGN_KEY)) {
-                    difficulty = last_key - '0';
-                    last_key = '\0';
-                    rendered = 0;
-                    game_init();
-                    game_state = START;
-                }
+                set_state(1, 2);
+                game_init();
+                difficulty = last_key - '0';
+                game_state = START;
             } else if (game_state==START) {
                 // Main game loop
                 // Handle dinosaur movement, cacti generation and movement
@@ -66,16 +59,16 @@ void ctrl_thread() {
                     dino_position++;
                     rendered=0;
                 }
-                last_key = '\0';
-            } else if (game_state==GAMEOVER){
+            } else if (game_state==GAMEOVER && key_char == SIGN_KEY) {
                 set_state(1, 4);
-                if (last_key == SIGN_KEY) {
-                    game_state = READY;
-                    rendered = 0 ;
-                }
-                last_key = '\0';
+                game_state = READY;
+                rendered = 0 ;
+            } else {
+                goto NEXT; // last key not used, don't clean.
             }
+            last_key = '\0';
         }
+        NEXT:
         set_state(1, 5);
         ThreadYield();
     }
@@ -115,9 +108,8 @@ void render_thread() {
                         LCD_cursorGoTo(row, col);
                         if(row==dino_position && col==0) {
                             LCD_write_char(DINOSAUR); 
-                        }else if (check_cactus(map, row, col)) { // If there's a cactus at this position
-                            // LCD_cursorGoTo(row, col);
-                            LCD_write_char(CACTUS); // Assuming '\1' is mapped to cactus graphics
+                        }else if (check_cactus(map, row, col)) {
+                            LCD_write_char(CACTUS);
                         }else{
                             LCD_write_char(' ');
                         }
@@ -146,6 +138,7 @@ void fixed_update() {
             uchar add1=0;
             uchar add2=0;
             if (!check_cactus(map, dino_position, 0)) {
+                //update map randomly
                 set_state(0, 2);
                 new = random()%(5-density[difficulty])==0;
                 add1 = check_cactus(map, 0, 8);
@@ -192,8 +185,8 @@ void main() {
     strcpy(score_string, "Score: 000");
     game_init();
 
-    LCD_set_symbol(0x08, dinosaur); // bitmap for dinosaur starts at 0x08
-    LCD_set_symbol(0x10, cactus); // bitmap for cactus starts at 0x10
+    LCD_set_symbol(DINOSAUR*0x08, dinosaur); // bitmap for dinosaur starts at 0x08
+    LCD_set_symbol(CACTUS*0x08, cactus); // bitmap for cactus starts at 0x10
 
     // Create threads
     ThreadCreate(ctrl_thread);

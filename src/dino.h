@@ -19,7 +19,7 @@
 #define DINOSAUR '\1'
 #define CACTUS '\2'
 
-
+// Debug utils, which can indicate the line of code.
 // #define DEBUG
 #ifdef DEBUG
     #define set_state(s, ss) {\

@@ -129,7 +129,9 @@ void ThreadYield(void) {
             curThread=0;
             cnt0=0;
         }else{
-            curThread = (curThread==1) ? 2 : 1;
+            // If yield from ctrl thread or fixed update.
+            // Enable render thread to display the changes.
+            curThread = (curThread==2) ? 1 : 2;
         }
         if(mask & isAlive[curThread]) break;
     } while (1);

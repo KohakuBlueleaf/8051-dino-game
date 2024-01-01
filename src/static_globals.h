@@ -12,11 +12,11 @@ __data __at(0x1B) char key_char; // for game control to move the dinosaur
 __data __at(0x1C) char last_key;
 __data __at(0x1D) bool lcd_ready; 
 __data __at(0x1E) bool rendered;
-__data __at(0x1F) unsigned char random_number;
+__data __at(0x1F) uchar random_number;
 
 // Define global variables and game state
 __data __at(0x21) char game_state; // 3 NOT START, 4 start, 5 over
-__data __at(0x22) unsigned char score;
+__data __at(0x22) uchar score;
 __data __at(0x23) char dino_position; // 0 upper, 1 lower
 __data __at(0x24) char difficulty;       //
 __data __at(0x25) char state;
@@ -38,5 +38,5 @@ __data __at (0x37) char i;
 __data __at (0x38) char tmp;
 __data __at (0x39) char tmp2;
 __data __at (0x3A) char isAlive[MAXTHREADS];
-__data __at (0x3E) unsigned char cnt0;
-__data __at (0x3F) unsigned char stay;
+__data __at (0x3E) uchar cnt0;
+__data __at (0x3F) uchar stay;

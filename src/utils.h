@@ -1,9 +1,10 @@
 #include <8051.h>
+#include "types.h"
 
 #ifndef UTILS_H
 #define UTILS_H
 
-unsigned char lfsr(unsigned char x);
-unsigned char xorshift(unsigned char x);
+uchar lfsr(uchar x);
+uchar xorshift(uchar x);
 unsigned char random();
 #endif
