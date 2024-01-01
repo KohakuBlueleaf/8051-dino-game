@@ -81,14 +81,14 @@ void LCD_write_char(char c) {
 }
 
 
-void LCD_write_string(char* str, int x, int y) {
-    while (*str) { // Check the character is not '\0'
-        LCD_cursorGoTo(x, y);
-        LCD_write_char(*str); // Write the current character to LCD
-        str++; // Move to the next character
-        y++;
-    }
-}
+// void LCD_write_string(char *line, unsigned char r, unsigned char c){
+//     while(*line){
+//         LCD_cursorGoTo(r, c);
+//         LCD_write_char(*line);
+//         line++;
+//         c++;
+//     }
+// }
 
 
 void delay(unsigned char n) {

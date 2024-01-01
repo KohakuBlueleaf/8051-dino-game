@@ -20,5 +20,12 @@
 #define CACTUS '\2'
 
 
-// Declare the function
-void delayms(unsigned int time);
+// #define DEBUG
+#ifdef DEBUG
+    #define set_state(s, ss) {\
+        state = s;\
+        sub_state = ss;\
+    }
+#else
+    #define set_state(s, ss) {}
+#endif

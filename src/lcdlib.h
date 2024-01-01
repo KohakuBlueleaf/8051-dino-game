@@ -51,9 +51,39 @@ void delay(unsigned char n) ;
 
 #define LCD_setCgRamAddress(addr) \
     LCD_IRWrite(0x40 + (addr))
-    
+
+
+// code is the character generation memory 
+// (CG RAM address for the bitmap. 
+//  write '\1' for the dinosaur, '\2' for the cactus.
+// you need to write all 8 bytes for each bitmap.
+// of course, you could do it in a loop or do pointer arithmetic
+#define LCD_set_symbol(code, symb) { \
+    LCD_setCgRamAddress(code); \
+    LCD_write_char(symb[0]); \
+    LCD_write_char(symb[1]); \
+    LCD_write_char(symb[2]); \
+    LCD_write_char(symb[3]); \
+    LCD_write_char(symb[4]); \
+    LCD_write_char(symb[5]); \
+    LCD_write_char(symb[6]); \
+    LCD_write_char(symb[7]); \
+}
+
 void LCD_functionSet(void) ;
 void LCD_write_char(char c) ;
-void LCD_write_string(char *s, int x, int y);
+// void LCD_write_string(char *line, unsigned char row, unsigned char col);
 unsigned char LCD_ready(void);
+
+#define LCD_write_string(line, row) \
+{ \
+    for(col = 0; col < 16 && line[col]; col++) { \
+        LCD_cursorGoTo(row, col); \
+        LCD_write_char(line[col]); \
+    } \
+    for(col=col; col<16; col++) { \
+        LCD_cursorGoTo(row, col); \
+        LCD_write_char(' '); \
+    }\
+}
 #endif // __LCDLIB_H__

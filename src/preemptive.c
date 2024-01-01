@@ -3,6 +3,7 @@
  */
 
 #include <8051.h>
+#include "types.h"
 #include "static_globals.h"
 #include "dino.h"
 #include "preemptive.h"
@@ -81,37 +82,35 @@ void Bootstrap(void) {
  */
 ThreadID ThreadCreate(FunctionPtr fp) {
     if(mask == 0b1111) return -1;
-    __critical {
-        for(i = 0; i < MAXTHREADS; i++) {
-            if(((mask) & (0b0001 << i)) == 0) {
-                mask |= (0b0001 << i);
-                newThread = i;
-                break;
-            }
+    for(i = 0; i < MAXTHREADS; i++) {
+        if(((mask) & (0b0001 << i)) == 0) {
+            mask |= (0b0001 << i);
+            newThread = i;
+            break;
         }
-
-        tmp = SP; // tmp : old thread stack pointer
-        SP = 0x3F + (i << 4); // SP: new thread stack pointer
-
-        __asm
-            push DPL
-            push DPH
-            mov A, #0
-            push A
-            push A
-            push A
-            push A
-        __endasm;
-
-        tmp2 = (i << 3);
-        
-        __asm
-            push _tmp2 // thread selection register
-        __endasm;
-        
-        savedSP[newThread] = SP;
-        SP = tmp; // let the old thread continue
     }
+
+    tmp = SP; // tmp : old thread stack pointer
+    SP = 0x3F + (i << 4); // SP: new thread stack pointer
+
+    __asm
+        push DPL
+        push DPH
+        mov A, #0
+        push A
+        push A
+        push A
+        push A
+    __endasm;
+
+    tmp2 = (i << 3);
+    
+    __asm
+        push _tmp2 // thread selection register
+    __endasm;
+    
+    savedSP[newThread] = SP;
+    SP = tmp; // let the old thread continue
     return newThread;
 }
 
@@ -122,21 +121,19 @@ ThreadID ThreadCreate(FunctionPtr fp) {
  * so we only change to it when cnt0 get the period
  * Otherwise we change between 2 and 1. (game_ctrl and render)
  */
-static const unsigned char speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
+static const uchar speed[] = {0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 void ThreadYield(void) {
-    __critical {
-        SAVESTATE;
-        do {
-            if(cnt0>(3-speed[difficulty]) && gameState==START){
-                curThread=0;
-                cnt0=0;
-            }else{
-                curThread = (curThread==1) ? 2 : 1;
-            }
-            if(mask & isAlive[curThread]) break;
-        } while (1);
-        RESTORESTATE;
-    }
+    SAVESTATE;
+    do {
+        if(cnt0>(3-speed[difficulty]) && gameState==START){
+            curThread=0;
+            cnt0=0;
+        }else{
+            curThread = (curThread==1) ? 2 : 1;
+        }
+        if(mask & isAlive[curThread]) break;
+    } while (1);
+    RESTORESTATE;
 }
 
 
