@@ -78,7 +78,7 @@ bool LCD_ready(void);
 #define LCD_write_string(line, row) \
 { \
     LCD_cursorGoTo(row, 0); \
-    for(col=0; col < 16 && line[col]; col++) { \
+    for(col=0; col < MAP_WIDTH && line[col]; col++) { \
         LCD_write_char(line[col]); \
     } \
     for(; col<16; col++) { \

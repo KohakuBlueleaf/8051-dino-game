@@ -24,7 +24,7 @@ __data __at(0x27) uchar random_number;
 // Each bit represents whether there is a cactus at that position
 // Dividing by 8 as there are 8 bits in a byte
 __data __at(0x28) uchar map[MAP_HEIGHT][MAP_WIDTH / 8]; 
-__data __at(0x70) char score_string[16];
+__data __at(0x70) char score_string[11];
 
 
 // Define global variables for preemptive
