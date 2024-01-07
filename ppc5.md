@@ -14,6 +14,7 @@
 * Some Additional utilities (for random number/debugging) are defined in `src/utils.h`.
 * Beside the global var which is only used in `testlcd.c`, all the shared global var are in the `src/static_globals.h`
 * Both dino game and testlcd share same Makefile but have different target, check README or typescript for more information.
+* `set_state` is for debugging, which can indicate the current running code.
 
 #### Part1, Peripheral devices
 
@@ -109,3 +110,18 @@ This thread will utilize the LCD library (implemented in part1) to display strin
   * ![1704124346949](image/ppc5/1704124346949.png)
 
 ##### fixed_update
+
+This thread will be enabled once the cnt reach target count (defined by difficulty).
+
+In this thread, we doing map update and result check (if the dino hit the updated map).
+The update strategy is random + validation. Use diffculty to determine the probability of new catus.
+
+random update map:
+![1704598967805](image/ppc5/1704598967805.png)
+
+checking:
+![1704598992797](image/ppc5/1704598992797.png)
+
+##### Demo
+![1704598846467](image/ppc5/1704598846467.png)
+![1704598857124](image/ppc5/1704598857124.png)
