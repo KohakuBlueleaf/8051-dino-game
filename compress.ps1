@@ -3,4 +3,10 @@ $compress = @{
     CompressionLevel = "Fastest"
     DestinationPath = "./110062119-ppc5.zip"
 }
-Compress-Archive @compress
+Compress-Archive -Force @compress
+$compress = @{
+    Path = "./110062119-ppc5.zip"
+    CompressionLevel = "Fastest"
+    DestinationPath = "./110062119_final.zip"
+}
+Compress-Archive -Force @compress
