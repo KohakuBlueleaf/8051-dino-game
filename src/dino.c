@@ -10,7 +10,7 @@
 
 
 void game_init(void){
-    score = 121;
+    score = 0;
     rendered = 0;
     dino_position = 0;
     cnt0 = 0;
