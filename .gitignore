@@ -1,6 +1,7 @@
 .vscode/
 .DS_Store
 *.pdf
+*.zip
 build/
 
 # SDCC stuff

@@ -1,0 +1,17 @@
+mkdir "build"
+mkdir "build/buttonlib"
+mkdir "build/dino"
+mkdir "build/keylib"
+mkdir "build/lcdlib"
+mkdir "build/preemptive"
+mkdir "build/testlcd"
+mkdir "build/utils"
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/buttonlib/buttonlib.rel src/buttonlib.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/dino/dino.rel src/dino.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/keylib/keylib.rel src/keylib.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/lcdlib/lcdlib.rel src/lcdlib.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/preemptive/preemptive.rel src/preemptive.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/testlcd/testlcd.rel src/testlcd.c
+sdcc -c --opt-code-speed --model-small --no-xinit-opt -o ./build/utils/utils.rel src/utils.c
+sdcc  -o ./build/testlcd.hex build/buttonlib/buttonlib.rel build/keylib/keylib.rel build/lcdlib/lcdlib.rel build/preemptive/preemptive.rel build/utils/utils.rel build/testlcd/testlcd.rel
+sdcc  -o ./build/dino.hex build/buttonlib/buttonlib.rel build/keylib/keylib.rel build/lcdlib/lcdlib.rel build/preemptive/preemptive.rel build/utils/utils.rel build/dino/dino.rel
