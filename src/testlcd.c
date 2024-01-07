@@ -65,7 +65,6 @@ void ProducerKey(void) {
 
 void ConsumerLCD(void) {
     char char_to_display; // To hold the character to display
-    
     while(1) {
         if(!rendered_key) {
             char_to_display = last_key;
@@ -81,6 +80,12 @@ void ConsumerLCD(void) {
         if(char_to_display){
             while(!LCD_ready()) {}
             LCD_write_char(char_to_display); // Write the character to the LCD
+            col += 1;
+            if(col>=MAP_WIDTH){
+                col = 0;
+                row = !row;
+                LCD_cursorGoTo(row, 0);
+            }
         }
         char_to_display = 0;
         ThreadYieldSimple();
@@ -96,11 +101,13 @@ void ConsumerLCD(void) {
  */
 void main(void) {
     LCD_Init();
+    row = 0;
+    col = 0;
 
-	// spawn Producer1 first then Producer2
-	ThreadCreate(ProducerButton);
-	ThreadCreate(ProducerKey); 
-	ConsumerLCD();
+    // spawn Producer1 first then Producer2
+    ThreadCreate(ProducerButton);
+    ThreadCreate(ProducerKey); 
+    ConsumerLCD();
 }
 
 void _sdcc_gsinit_startup(void) {
